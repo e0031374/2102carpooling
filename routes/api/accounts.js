@@ -24,6 +24,25 @@ router.get('/', (req, res) => {
     });
 });
 
+//instead of app.get, we are in a router so use router.get
+router.get('/:uname/:pass', (req, res) => {
+    const sql_query = `SELECT uname FROM Accounts WHERE uname='${req.params.uname}' AND pass='${req.params.pass}'`;
+    pool.query(sql_query, (err,data) => {
+        if (err) {
+            console.log(err);
+            throw err;
+        }
+        //console.log(data);
+        console.log(sql_query);
+        console.log(data.rows);
+        if (data.rows.length >= 1) {
+            res.status(200).json({success: true, uname:`${data.rows[0].uname}`});
+        } else {
+            res.status(400).json({success: false, msg: 'invalid credentials'});
+        }
+        //res.json(data.rows)
+    });
+});
 
 // @router POST api/accounts
 // @desc Create a new account
@@ -39,7 +58,7 @@ router.post('/', (req, res) => {
             throw err;
         }
         //console.log(data);
-        res.status(200).json({success: true, msg: 'insert success'});
+        res.status(200).json({success: true, msg: 'insert success', uname: req.body.uname});
     });
 });
 
@@ -65,4 +84,8 @@ router.delete('/:uname', (req, res) => {
         res.status(200).json({success: true, msg: 'delete success or row not found'});
     });
 });
+
+
+
+
 module.exports = router;

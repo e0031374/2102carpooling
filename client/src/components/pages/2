@@ -1,0 +1,18 @@
+import React from 'react'
+
+import JobPanel from '../driver/JobPanel'
+import AddJobItem from '../driver/AddJobItem'
+import PropTypes from 'prop-types';
+import Header from '../layout/Header';
+
+const Passenger = (props) => {
+    return (
+        <div>
+            <Header />
+            <h1>Passenger Screen</h1>
+        </div>
+    )
+}
+
+
+export default Passenger;

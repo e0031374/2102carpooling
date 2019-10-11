@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 
 
 const accounts = require('./routes/api/accounts');
+const settings = require('./routes/api/settings');
 
 const app = express(); //boilerplate: initialize express into app
 
@@ -11,6 +12,7 @@ const app = express(); //boilerplate: initialize express into app
 app.use(bodyParser.json());
        
 app.use('/api/accounts', accounts);
+app.use('/api/settings', settings);
 
 // the first part is if you want to deploy
 const port = process.env.PORT || 5000;
