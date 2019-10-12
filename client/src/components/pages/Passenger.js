@@ -5,6 +5,9 @@ import { getSettings } from '../../actions/loginActions';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+import PassengerPanel from '../passenger/PassengerPanel';
+import PassengerJobItem from '../passenger/PassengerJobItem';
+
 
 const Passenger = (props) => {
     if (props.login.isPassenger) {
@@ -12,6 +15,7 @@ const Passenger = (props) => {
             <div>
                 <Header />
                 <h1>Passenger Screen</h1>
+                <PassengerPanel/>
             </div>
         );
     } else {
