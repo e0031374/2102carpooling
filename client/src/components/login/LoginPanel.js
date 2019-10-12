@@ -1,5 +1,5 @@
 import React from 'react';
-import { loginValidate } from '../../actions/loginActions';
+import { loginValidate, getSettings } from '../../actions/loginActions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from  'react-router-dom';
@@ -20,6 +20,7 @@ class LoginPanel extends React.Component {
 
     onSubmit = (e) => {
         e.preventDefault();
+        const user = this.state.uname;
         this.props.loginValidate({...this.state});
 
         if (this.props.login.isLoggedIn) {
@@ -30,6 +31,7 @@ class LoginPanel extends React.Component {
             this.setState({...this.state, 
                 msg: this.props.login.authError});
         }
+        this.props.getSettings(user);
     }
     render () {
         if (this.props.login.user) return <Redirect to='/home' />
@@ -71,4 +73,8 @@ LoginPanel.propTypes = {
 const mapStateToProps = state => ({
     login: state.login,
 });
-export default connect(mapStateToProps, {loginValidate})(LoginPanel);
+export default connect(
+    mapStateToProps, 
+    {loginValidate,
+     getSettings   
+})(LoginPanel);
