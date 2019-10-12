@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { getSettings } from '../../actions/loginActions';
 import AddPassengerForm from '../settings/AddPassengerForm';
 import AddDriverForm from '../settings/AddDriverForm';
+import AddAdvertizerForm from '../settings/AddAdvertizerForm';
 import PropTypes from 'prop-types';
 
 
@@ -23,11 +24,15 @@ class Settings extends React.Component {
         const addDriverForm = isDriver
             ? <div>You are a driver alr</div>  
             : <AddDriverForm/>;    
+        const addAdvertizerForm = isAd
+            ? <div>You are an Advertizer alr</div>  
+            : <AddAdvertizerForm/>;    
         return (
             <div>
                 <Header />
                 {addPassengerForm}
                 {addDriverForm}
+                {addAdvertizerForm}
             </div>
         );
     }

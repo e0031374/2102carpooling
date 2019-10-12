@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Passenger from './components/pages/Passenger';
 import Driver from './components/pages/Driver';
+import Advertizer from './components/pages/Advertizer';
 import Home from './components/pages/Home';
 import Login from './components/pages/Login';
 import Settings from './components/pages/Settings';
@@ -23,9 +24,10 @@ class App extends React.Component {
                     <div>
                         <Route exact path="/" component={Login}/>
                         <Route path="/home" component={Home}/>
-			<Route path="/passenger" component={Passenger}/>
+			            <Route path="/passenger" component={Passenger}/>
                         <Route path="/driver" component={Driver}/>
-			<Route path="/settings" component={Settings}/>
+                        <Route path="/advertizer" component={Advertizer}/>
+			            <Route path="/settings" component={Settings}/>
                     </div>
                 </Router>
             </Provider>

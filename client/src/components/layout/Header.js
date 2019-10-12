@@ -25,6 +25,7 @@ class Header extends React.Component {
                         <Link to="/home">Home</Link>
                         <Link to="/passenger">Passenger</Link>
                         <Link to="/driver">Driver</Link>
+                        <Link to="/advertizer">Advertizer</Link>
                         <Link to="/settings">Setting</Link>
                     </ul>
                 </nav>

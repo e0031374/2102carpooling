@@ -1,3 +1,4 @@
+
 import React from 'react'
 import Header from '../layout/Header';
 import { connect } from 'react-redux';
@@ -6,12 +7,12 @@ import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 
-const Passenger = (props) => {
-    if (props.login.isPassenger) {
+const Advertizer = (props) => {
+    if (props.login.isAd) {
         return (
             <div>
                 <Header />
-                <h1>Passenger Screen</h1>
+                <h1>Advertizer Screen</h1>
             </div>
         );
     } else {
@@ -22,7 +23,7 @@ const Passenger = (props) => {
 }
 
 
-Passenger.propTypes = {
+Advertizer.propTypes = {
     login: PropTypes.object.isRequired
 }
 
@@ -33,4 +34,4 @@ const mapStateToProps = (state) => ({
 export default connect(
     mapStateToProps, 
     {getSettings}
-)(Passenger);
+)(Advertizer);

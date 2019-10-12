@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { ADD_USER, GET_USER, LOGIN_VALIDATION, LOGIN_ERROR,
-    USER_SETTINGS, GET_SETTINGS, ADD_PASSENGER, ADD_DRIVER } from '../actions/types';
+    USER_SETTINGS, GET_SETTINGS, ADD_PASSENGER, ADD_DRIVER, ADD_ADVERTIZER } from '../actions/types';
 
 export const loginValidate = (state) => dispatch => {
     console.log("here")
@@ -100,6 +100,20 @@ export const addDriver = (formState) => dispatch => {
                     //fetch new settings
                     //should also fetch driver settings
                     //but one day i guess
+                    type: GET_SETTINGS,
+                    payload: res.data
+                })
+            console.log(res.data)
+        })
+};
+
+//expects req.body.uname to be inserted in formState
+export const addAdvertizer = (formState) => dispatch => {
+    axios
+        .post(`/api/settings/advertizers`, formState)
+        .then(res => {
+                dispatch({
+                    //fetch new settings
                     type: GET_SETTINGS,
                     payload: res.data
                 })
