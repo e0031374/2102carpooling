@@ -3,6 +3,7 @@ import Header from '../layout/Header';
 import { connect } from 'react-redux';
 import { getSettings } from '../../actions/loginActions';
 import AddPassengerForm from '../settings/AddPassengerForm';
+import AddDriverForm from '../settings/AddDriverForm';
 import PropTypes from 'prop-types';
 
 
@@ -19,10 +20,14 @@ class Settings extends React.Component {
         const addPassengerForm = isPassenger
             ? <div>You are a passenger alr</div>  
             : <AddPassengerForm/>;    
+        const addDriverForm = isDriver
+            ? <div>You are a driver alr</div>  
+            : <AddDriverForm/>;    
         return (
             <div>
                 <Header />
                 {addPassengerForm}
+                {addDriverForm}
             </div>
         );
     }

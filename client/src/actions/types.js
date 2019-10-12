@@ -9,3 +9,5 @@ export const ADD_USER = 'ADD_USER';
 export const USER_SETTINGS = 'USER_SETTINGS';
 export const GET_SETTINGS = 'GET_SETTINGS';
 export const ADD_PASSENGER = 'ADD_PASSENGER';
+export const ADD_DRIVER = 'ADD_DRIVER';
+export const ADD_ADVERTIZER = 'ADD_ADVERTIZER';
