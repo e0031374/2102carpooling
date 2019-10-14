@@ -1,3 +1,4 @@
+//DEPRECATED
 import axios from 'axios';
 import { GET_JOBS, ADD_JOB, DELETE_JOB, JOBS_LOADING} from '../actions/types';
 

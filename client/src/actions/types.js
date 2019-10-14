@@ -20,3 +20,11 @@ export const ADD_ADVERTIZER = 'ADD_ADVERTIZER';
 export const GET_AVAILABLE_JOBS = 'GET_AVAILABLE_JOBS';
 export const BID_AVAILABLE_JOBS = 'BID_AVAILABLE_JOBS';
 export const PASSENGER_JOBS_LOADING = 'PASSENGER_JOBS_LOADING';
+
+// driver screen
+export const DRIVER_JOBS_LOADING = 'DRIVER_JOBS_LOADING';
+export const GET_DRIVER_JOBS = 'GET_DRIVER_JOBS';
+
+// ads screen
+export const ADS_LOADING = 'ADS_LOADING';
+export const GET_ADS = 'GET_ADS';

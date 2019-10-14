@@ -2,6 +2,7 @@ import React from 'react'
 
 import JobPanel from '../driver/JobPanel'
 import AddJobItem from '../driver/AddJobItem'
+import DriverSidebar from '../driver/DriverSidebar'
 import PropTypes from 'prop-types';
 import Header from '../layout/Header';
 
@@ -9,36 +10,6 @@ import { connect } from 'react-redux';
 import { getJobs, deleteJob } from '../../actions/jobActions';
 
 class Driver extends React.Component {
-    //state = {
-    //    user : "waifong",
-
-    //    jobs: [
-    //        {
-    //            user: "waifong",
-    //            startDateTime: "02-Jan-1990 1459",
-    //            endDateTime: "02-Jan-1990 2359",
-    //            origin: "KR Terminal",
-    //            end: "College Green",
-    //            bid: false,
-    //        },
-    //        {
-    //            user: "waifong",
-    //            startDateTime: "02-Jan-1990 0000",
-    //            endDateTime: "02-Jan-1990 2359",
-    //            origin: "KR MRT",
-    //            end: "Biz 2",
-    //            bid: true,
-    //        },
-    //        {
-    //            user: "waifong",
-    //            startDateTime: "02-Jan-1990 0100",
-    //            endDateTime: "02-Jan-1990 0200",
-    //            origin: "KR MRT",
-    //            end: "Utown",
-    //            bid: false,
-    //        }
-    //    ]
-    //};
 
     conponentDidMount() {
         this.props.getJobs(); //calls the action to get the reucer
@@ -65,17 +36,26 @@ class Driver extends React.Component {
         return (
             <div>
                 <Header/>
-                <h1>Driver Screen</h1>
-                <JobPanel 
-                jobs={jobs}
-                delJob={this.delJob}
-                />
-                <AddJobItem 
-                addJob={this.addJob}
-                />
+                <div style={innerStyle}>
+                    <DriverSidebar style={innerStyle} />
+                    <div style={innerStyle}>
+                        <h1>Driver Screen</h1>
+                        <JobPanel 
+                        jobs={jobs}
+                        delJob={this.delJob}
+                        />
+                        <AddJobItem 
+                        addJob={this.addJob}
+                        />
+                    </div>
+                </div>
             </div>
         );
     }
+}
+
+const innerStyle = {
+    display: 'inline',
 }
 
 Driver.propTypes = {
