@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
-import { addJob } from '../../actions/jobActions';
+import { addDriverJob } from '../../actions/driverActions';
 
 class AddJobItem extends React.Component {
     state = {
@@ -35,7 +35,7 @@ class AddJobItem extends React.Component {
 
     onSubmit = (evenT) => {
         evenT.preventDefault();
-        const {origin, destination, startDateTime, endDateTime} = this.state;
+        const {origin, destination, startDateTime, endDateTime, isAd, adFee} = this.state;
         //this.props.addJob(this.state.);
         //this.setState({ [param]: ''});
         const newJob = {
@@ -43,8 +43,15 @@ class AddJobItem extends React.Component {
         }
 
         // Add job via addJob action
-        this.props.addJob(newJob);
-        this.toggle();
+        this.props.addDriverJob(newJob);
+
+        if (isAd) {
+            const ad = {
+                post: newJob,
+                fee: adFee,
+            }
+            //this.props.addAdvert();
+        }
     }
 
     render() {
@@ -99,9 +106,10 @@ class AddJobItem extends React.Component {
                 </label>
                 <label>Advert Fee
                     <input 
-                        type="text" 
+                        type="number" 
                         name="adFee"
                         value={this.state.adFee}
+                        onChange={this.onChange}
                     />
                 </label>
                 <button
@@ -112,11 +120,12 @@ class AddJobItem extends React.Component {
 }
 
 AddJobItem.propTypes = {
-    addJob: PropTypes.func.isRequired,
+    addDriverJob: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
+    driver: state.driver,
     job: state.jobs
 });
 
-export default connect(mapStateToProps, {addJob})(AddJobItem);
+export default connect(mapStateToProps, {addDriverJob})(AddJobItem);

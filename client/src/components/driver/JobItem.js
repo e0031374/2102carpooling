@@ -1,31 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { delDriverJob  } from '../../actions/driverActions';
 
-class JobItem extends React.Component {
-    render() {
-        console.log(this.props.job.user);
-        const { user, startDateTime , origin, endDateTime} = this.props.job;
-
-        return (
-        <div>
-            <p> {user} {' | Origin: '} 
-            {origin} {' | Start: '} 
-            {startDateTime} {' | End: '} 
-            {endDateTime} {' | Highest Bid: '} 
-            current highest bid? 
-            {' '}
-            <button onClick={this.props.delJob.bind(this, user, startDateTime)}
-            >x</button>
-            </p>
-        </div>
-        );
+const JobItem = (props) => {
+    console.log(props.job.user);
+    const { user, startDateTime , origin, endDateTime} = props.job;
+    const onClick = (e) => {
+        props.delDriverJob(user,startDateTime);
     }
-}
 
-
-JobItem.propTypes = {
-    job: PropTypes.object.isRequired,
-    delJob: PropTypes.func.isRequired,
+    return (
+    <div>
+        <p> {user} {' | Origin: '} 
+        {origin} {' | Start: '} 
+        {startDateTime} {' | End: '} 
+        {endDateTime} {' | Highest Bid: '} 
+        current highest bid? 
+        {' '}
+        <button onClick={onClick}
+        >x</button>
+        </p>
+    </div>
+    );
 }
 
 export default JobItem;

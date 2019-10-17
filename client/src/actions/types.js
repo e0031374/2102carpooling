@@ -24,6 +24,8 @@ export const PASSENGER_JOBS_LOADING = 'PASSENGER_JOBS_LOADING';
 // driver screen
 export const DRIVER_JOBS_LOADING = 'DRIVER_JOBS_LOADING';
 export const GET_DRIVER_JOBS = 'GET_DRIVER_JOBS';
+export const GET_CARS = 'GET_CARS';
+export const GET_INSURANCE = 'GET_INSURANCE';
 
 // ads screen
 export const ADS_LOADING = 'ADS_LOADING';

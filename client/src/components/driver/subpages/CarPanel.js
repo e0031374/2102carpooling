@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { getDriverJobs, delDriverJob } from '../../actions/driverActions';
+import { getDriverJobs } from '../../actions/driverActions';
 import { connect } from 'react-redux';
 
 import JobItem from '../driver/JobItem'
@@ -18,7 +18,7 @@ class JobPanel extends React.Component {
             <JobItem 
             key={job.startDateTime}
             job={job} 
-            delDriverJob={delDriverJob}
+            delJob={this.props.delJob}
             />
         )); //<JobItem />;
     }
@@ -26,7 +26,7 @@ class JobPanel extends React.Component {
 
 
 JobPanel.propTypes = {
-    delDriverJob: PropTypes.func.isRequired,
+    delJob: PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -36,5 +36,5 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps,
-    {getDriverJobs, delDriverJob}
+    {getDriverJobs}
 )(JobPanel);
