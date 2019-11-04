@@ -2,6 +2,8 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { addAccount } from '../../actions/loginActions';
 import FixedCard from '../layout/FixedCard';
+import { Confirm, Grid, Icon, Form, Button, 
+    Loader, Header, Card } from 'semantic-ui-react';
 
 
 class SignupPanel extends React.Component {
@@ -13,9 +15,11 @@ class SignupPanel extends React.Component {
         passenger: true,
     };
 
-    onChange = (e) => this.setState({
-        [e.target.name]: e.target.value
-    });
+    onChange = (e, {name, value}) => this.setState({ [name]: value });
+    onCheck = (e, {name, value}) => this.setState({ [name]: ! this.state[name] });
+    //onChange = (e) => this.setState({
+    //    [e.target.name]: e.target.value
+    //});
 
     onSubmit = (e) => {
         e.preventDefault();
@@ -29,11 +33,10 @@ class SignupPanel extends React.Component {
     }    
 
     render() {
-        const formSignUp = <form onSubmit={this.onSubmit}>
-                <p>Sign Up for Carpooling </p>
+        const formSignUp = <Form onSubmit={this.onSubmit}>
                 <div>
-                    <label>Desired Uname</label>
-                    <input 
+                    <Form.Input 
+                        label="Desired Username"
                         type="text"
                         name="uname"
                         placeholder="johndoe"
@@ -42,8 +45,8 @@ class SignupPanel extends React.Component {
                     />
                 </div>
                 <div>
-                    <label>Desired Password</label>
-                    <input 
+                    <Form.Input 
+                        label="Desired Password"
                         type="text"
                         name="pass"
                         placeholder="password"
@@ -51,14 +54,11 @@ class SignupPanel extends React.Component {
                         onChange={this.onChange}
                     />
                 </div>
-                <button>Submit</button>
-            </form>
+                <Form.Button onClick={this.onClick}>Submit</Form.Button>
+            </Form>
         return(
-            <div style={cardStyle}>
-                <FixedCard
-                    title={'SignUp'}
-                    msg={formSignUp}
-                />
+            <div >
+                {formSignUp}
             </div>
         ) 
     }

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { getSettings } from '../../actions/loginActions';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import {Form, Container } from 'semantic-ui-react';
 
 class ChangePasswordForm extends React.Component {
 
@@ -14,11 +15,9 @@ class ChangePasswordForm extends React.Component {
         redir: false,
     }
 
-    onChange = (e) => {
-        this.setState({
-            [e.target.name]: e.target.value
-        });
-    }
+    onChange = (e, {name, value}) => this.setState({ [name]: value });
+
+    onCheck = (e, {name, value}) => this.setState({ [name]: ! this.state[name] });
 
     onSubmit = (e) => {
         e.preventDefault();
@@ -45,43 +44,47 @@ class ChangePasswordForm extends React.Component {
         const errDisp = this.state.err
             ? <h3>New PAssword and Old Password doesnt match</h3>
             : <div></div>;
-        return (
-            <div>
+        const form = <div>
                 {this.renderRedirect()}
                 {errDisp}
-                <form onSubmit={this.onSubmit}>
-                    <label>Old Password
-                        <input
+                <Form >
+                        <Form.Input
+                            label="Old Password"
                             name="oldpass"
                             type="text"
                             value={this.state.oldpass}
                             placeholder={this.password}
                             onChange={this.onChange}
                         />
-                    </label>
-                    <label>New Password
-                        <input
+                        <Form.Input
+                            label="New Password"
                             name="newpass"
                             type="text"
                             value={this.state.newpass}
                             placeholder="password1"
                             onChange={this.onChange}
                         />
-                    </label>
-                    <label>Confirm Password
-                        <input
+                        <Form.Input
+                            label="Confirm Password"
                             type="text"
                             name="confirmpass"
                             value={this.state.confirmpass}
                             placeholder="password1"
                             onChange={this.onChange}
                         />
-                    </label>
-                    <button>submit</button>
-                </form>
+                    <Form.Button onClick={this.onSubmit}>submit</Form.Button>
+                </Form>
+            </div>
+        return (
+            <div style={container}>
+                <Container>{form}</Container>
             </div>
         );
     }
+}
+
+const container = {
+    padding: '20px',
 }
 
 const mapStateToProps = (state) => ({

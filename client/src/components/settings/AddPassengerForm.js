@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { addPassenger, getSettings } from '../../actions/loginActions';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import {Form, Container } from 'semantic-ui-react';
 
 class AddPassengerForm extends React.Component {
 
@@ -22,12 +23,8 @@ class AddPassengerForm extends React.Component {
         //});
     }
 
-    onChange = (e) => {
-        this.setState({
-            [e.target.name] : ! this.state[e.target.name]
-        });
-        console.log(this.state);
-    }
+    onChange = (e, {name, value}) => this.setState({ [name]: value });
+    onCheck = (e, {name, value}) => this.setState({ [name]: ! this.state[name] });
 
     onSubmit = (e) => {
         e.preventDefault();
@@ -48,24 +45,34 @@ class AddPassengerForm extends React.Component {
         console.log("launch");
         console.log(this.state);
         const red = (this.state.redirect)
-            ? <Redirect to="/passenger" />
-            : <p> Sign Up to be a Passenger </p>
-        return (
-            <form onSubmit={this.onSubmit}>
-                {red}
+            ? <Redirect to="/landing" />
+            : <p> Sign Up to be a Passenger</p>
+        const form = <Form>
                 <div>
-                    <label>Yes to Being a PAssenger?</label>
-                    <input
-                        type="checkbox"
+                    <Form.Checkbox
+                        label="Yes to Being an Passenger?"
                         name="addPassenger"
                         defaultChecked={this.state.addPassenger}
-                        onChange={this.onChange}
+                        onChange={this.onCheck}
                     />
-                    <button>Confirm Register to be Passenger</button>
+                    <Form.Button
+                        onClick={this.onSubmit}
+                    >Register to be Passenger</Form.Button>
                 </div>
-            </form>
+            </Form>;
+        const alrPassenger = this.props.login.isPassenger
+            ? <p> You already are an Passenger </p>
+            : form;
+        return (
+            <div style={container}>
+                <Container>{alrPassenger}</Container>
+            </div>
         );
     }
+}
+
+const container = {
+    padding: '20px',
 }
 
 AddPassengerForm.propTypes = {

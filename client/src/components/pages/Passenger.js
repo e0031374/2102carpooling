@@ -7,21 +7,24 @@ import PropTypes from 'prop-types';
 
 import PassengerPanel from '../passenger/PassengerPanel';
 import PassengerJobItem from '../passenger/PassengerJobItem';
+import Settings from './Settings';
 
 
 const Passenger = (props) => {
     if (props.login.isPassenger) {
         return (
             <div>
-                <Header />
                 <h1>Passenger Screen</h1>
                 <PassengerPanel/>
             </div>
         );
     } else {
         return (
-            <Redirect to='/settings'/>
+            <div>
+                <Settings/>
+            </div>
         );
+            //<Redirect to='/settings'/>
     }
 }
 

@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { addDriver, getSettings } from '../../actions/loginActions';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import {Form, Container } from 'semantic-ui-react';
 
 class AddDriverForm extends React.Component {
 
@@ -13,26 +14,10 @@ class AddDriverForm extends React.Component {
     }
 
     onComponentDidMount() {
-        //this doesnt work since
-        //  component only mounts once and setState will update it
-        //this.setState({
-        //    uname: this.props.login.user
-        //});
     }
 
-    onCheck = (e) => {
-        this.setState({
-            [e.target.name] : ! this.state[e.target.name]
-        });
-        console.log(this.state);
-    }
-
-    onChange = (e) => {
-        this.setState({
-            [e.target.name] : e.target.value
-        });
-        console.log(this.state);
-    }
+    onChange = (e, {name, value}) => this.setState({ [name]: value });
+    onCheck = (e, {name, value}) => this.setState({ [name]: ! this.state[name] });
 
     onSubmit = (e) => {
         e.preventDefault();
@@ -53,31 +38,42 @@ class AddDriverForm extends React.Component {
         console.log("launch");
         console.log(this.state);
         const red = (this.state.redirect)
-            ? <Redirect to="/driver" />
+            ? <Redirect to="/landing" />
             : <p> Sign Up to be a Driver</p>
-        return (
-            <form onSubmit={this.onSubmit}>
-                {red}
+        const form = <Form>
                 <div>
-                    <label>Yes to Being a Driver?</label>
-                    <input
-                        type="checkbox"
+                    <Form.Checkbox
+                        label="Yes to Being an Driver?"
                         name="addDriver"
                         defaultChecked={this.state.addDriver}
                         onChange={this.onCheck}
                     />
-                    <input
+                    <Form.Input
                         type="text"
                         name="license"
+                        label="license"
                         placeholder="A01234567"
                         value={this.state.license}
                         onChange={this.onChange}
                     />
-                    <button>Confirm Register to be Driver</button>
+                    <Form.Button
+                        onClick={this.onSubmit}
+                    >Register to be Driver</Form.Button>
                 </div>
-            </form>
+            </Form>;
+        const alrDriver = this.props.login.isDriver
+            ? <p> You already are an Driver </p>
+            : form;
+        return (
+            <div style={container}>
+                <Container>{alrDriver}</Container>
+            </div>
         );
     }
+}
+
+const container = {
+    padding: '20px',
 }
 
 AddDriverForm.propTypes = {

@@ -30,7 +30,6 @@ class Settings extends React.Component {
             : <AddAdvertizerForm/>;    
         return (
             <div>
-                <Header />
                 {addPassengerForm}
                 {addDriverForm}
                 {addAdvertizerForm}

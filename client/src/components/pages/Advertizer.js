@@ -5,19 +5,21 @@ import { connect } from 'react-redux';
 import { getSettings } from '../../actions/loginActions';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Settings from './Settings';
 
 
 const Advertizer = (props) => {
     if (props.login.isAd) {
         return (
             <div>
-                <Header />
                 <h1>Advertizer Screen</h1>
             </div>
         );
     } else {
         return (
-            <Redirect to='/settings'/>
+            <div>
+                <Settings/>
+            </div>
         );
     }
 }

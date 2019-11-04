@@ -34,6 +34,8 @@ class AddJobItem extends React.Component {
         });
     }
 
+    //onChange = (e, {name, value}) => this.setState({ [name]: value });
+    //onCheck = (e, {name, value}) => this.setState({ [name]: ! this.state[name] });
     onSubmit = (evenT) => {
         evenT.preventDefault();
         const {origin, destination, startDateTime, endDateTime, isAd, adFee} = this.state;

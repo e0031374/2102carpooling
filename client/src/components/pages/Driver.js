@@ -10,12 +10,12 @@ import Header from '../layout/Header';
 import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { getJobs, deleteJob } from '../../actions/jobActions';
+import Settings from './Settings';
 
 const Driver = (props) => {
     if (props.login.isDriver) {
         return (
             <div>
-                <Header />
                 <h1>Driver Screen</h1>
                 <div >
                     <DriverSidebar/>
@@ -24,7 +24,9 @@ const Driver = (props) => {
         );
     } else {
         return (
-            <Redirect to='/settings'/>
+            <div>
+                <Settings/>
+            </div>
         );
     }
 }

@@ -11,6 +11,7 @@ import Insurance from './components/driver/subpages/Insurance';
 import Advertizer from './components/pages/Advertizer';
 import Home from './components/pages/Home';
 import Login from './components/pages/Login';
+import Landing from './components/pages/Landing';
 import ForgotPass from './components/pages/ForgotPass';
 import Settings from './components/pages/Settings';
 
@@ -27,6 +28,7 @@ class App extends React.Component {
                 <Router>
                     <div>
                         <Route exact path="/" component={Login}/>
+                        <Route path="/landing" component={Landing}/>
                         <Route path="/home" component={Home}/>
 			            <Route path="/passenger" component={Passenger}/>
                         <Route path="/driver" component={Driver}/>

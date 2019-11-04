@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { addAdvertizer, getSettings } from '../../actions/loginActions';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import {Form, Container } from 'semantic-ui-react';
 
 class AddAdvertizerForm extends React.Component {
 
@@ -19,12 +20,8 @@ class AddAdvertizerForm extends React.Component {
         //});
     }
 
-    onChange = (e) => {
-        this.setState({
-            [e.target.name] : ! this.state[e.target.name]
-        });
-        console.log(this.state);
-    }
+    onChange = (e, {name, value}) => this.setState({ [name]: value });
+    onCheck = (e, {name, value}) => this.setState({ [name]: ! this.state[name] });
 
     onSubmit = (e) => {
         e.preventDefault();
@@ -45,28 +42,40 @@ class AddAdvertizerForm extends React.Component {
         console.log("launch");
         console.log(this.state);
         const red = (this.state.redirect)
-            ? <Redirect to="/advertizer" />
-            : <p> Sign Up to be a Advertizer</p>
-        return (
-            <form onSubmit={this.onSubmit}>
-                {red}
+            ? <Redirect to="/landing" />
+            : <p> Sign Up to be a Advertizer</p>;
+        const form = <Form onSubmit={this.onSubmit}>
                 <div>
-                    <label>Yes to Being an Advertizer?</label>
-                    <input
-                        type="checkbox"
+                    <Form.Checkbox
+                        label="Yes to Being an Advertizer?"
                         name="addAd"
                         defaultChecked={this.state.addAd}
-                        onChange={this.onChange}
+                        onChange={this.onCheck}
                     />
-                    <button>Confirm Register to be an Advertizer</button>
+                    <Form.Button
+                        onClick={this.onSubmit}
+                    >Register to be an Advertizer</Form.Button>
                 </div>
-            </form>
+            </Form>;
+        const alrAd = this.props.login.isAd
+            ? <p> You already are an Advertizer </p>
+            : form;
+        return (
+            <div style={container}>
+                <Container>
+                    {red}{alrAd}
+                </Container>
+            </div>
         );
     }
 }
 
+const container = {
+    padding: '20px',
+}
+
 AddAdvertizerForm.propTypes = {
-    login: PropTypes.object.isRequired
+    login: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state) => ({

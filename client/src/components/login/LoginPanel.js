@@ -5,6 +5,8 @@ import PropTypes from 'prop-types';
 import { Redirect } from  'react-router-dom';
 import FixedCard from '../layout/FixedCard';
 import { Link } from 'react-router-dom';
+import { Confirm, Grid, Icon, Form, Button, 
+    Loader, Header, Card } from 'semantic-ui-react';
 
 class LoginPanel extends React.Component {
 
@@ -14,11 +16,8 @@ class LoginPanel extends React.Component {
         msg: "", 
     }
 
-    onChange = (e) => {
-        this.setState({
-            [e.target.name] : [e.target.value]
-        });
-    }
+    onChange = (e, {name, value}) => this.setState({ [name]: value });
+    onCheck = (e, {name, value}) => this.setState({ [name]: ! this.state[name] });
 
     onSubmit = (e) => {
         e.preventDefault();
@@ -36,12 +35,12 @@ class LoginPanel extends React.Component {
         this.props.getSettings(user);
     }
     render () {
-        if (this.props.login.user) return <Redirect to='/home' />
-        const formLogin = <form onSubmit={this.onSubmit}>
-                <label>Login into Carpooling </label>
+        //if (this.props.login.user) return <Redirect to='/home' />
+        if (this.props.login.user) return <Redirect to='/landing' />
+        const formLogin = <Form >
                 <div>
-                     <label htmlFor="unameField">UserName: </label>
-                     <input
+                     <Form.Input
+                         label="Username"
                          id="unameField"
                          type="text"
                          name="uname"
@@ -51,8 +50,8 @@ class LoginPanel extends React.Component {
                      />
                 </div> 
                 <div>
-                     <label htmlFor="passField">Password: </label>
-                     <input
+                     <Form.Input
+                         label="Password"
                          id="passField"
                          type="text"
                          name="pass"
@@ -61,27 +60,35 @@ class LoginPanel extends React.Component {
                          onChange={this.onChange}
                      />
                 </div> 
-                <button
-                >Submit</button>
+                <Form.Button onClick={this.onSubmit}
+                >Submit</Form.Button>
                 <p>{'Forgot your password? '}
                     <Link to="/forgot">click here</Link>
                 </p>
-            </form>
+            </Form>
         return (
-            <div style={cardStyle}>
-                <FixedCard
-                    title={'Login'}
-                    msg={formLogin}
-                />
+            <div>
+                        {formLogin}
             </div>
         );
     }
 }
 
 const cardStyle = {
-    display: 'inline-block',
-    width: '400px',
+    padding: '20px',
+    borderRadius: '5px', /* 5px rounded corners */
+    boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)',
 }
+
+const formStyle = {
+    padding: '5px',
+    borderRadius: '5px', /* 5px rounded corners */
+    boxShadow: '0 8px 16px 0 rgba(0,0,0,0.2)',
+}
+//const cardStyle = {
+//    display: 'inline-block',
+//    width: '400px',
+//}
 
 LoginPanel.propTypes = {
     loginValidate : PropTypes.func.isRequired,
