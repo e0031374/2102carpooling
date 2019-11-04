@@ -87,5 +87,25 @@ router.delete('/:uname', (req, res) => {
 
 
 
-
+//instead of app.get, we are in a router so use router.get
+router.get('/forgot/:uname/:pass', (req, res) => {
+    // change this sql_query
+    const sql_query = `SELECT uname FROM Accounts WHERE uname='${req.params.uname}' AND pass='${req.params.pass}'`;
+    pool.query(sql_query, (err,data) => {
+        if (err) {
+            console.log(err);
+            throw err;
+        }
+        //console.log(data);
+        console.log(sql_query);
+        console.log(data.rows);
+        if (data.rows.length >= 1) {
+            // another search query for the actual password
+            res.status(200).json({success: true, uname:`${data.rows[0].uname}`});
+        } else {
+            res.status(400).json({success: false, msg: 'invalid credentials'});
+        }
+        //res.json(data.rows)
+    });
+});
 module.exports = router;

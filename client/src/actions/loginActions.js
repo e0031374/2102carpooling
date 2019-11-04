@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { ADD_USER, GET_USER, LOGIN_VALIDATION, LOGIN_ERROR,
-    USER_SETTINGS, GET_SETTINGS, ADD_PASSENGER, ADD_DRIVER, ADD_ADVERTIZER } from '../actions/types';
+    USER_SETTINGS, GET_SETTINGS, ADD_PASSENGER, ADD_DRIVER, ADD_ADVERTIZER,
+    RETRIEVE_PASS } from '../actions/types';
 
 export const loginValidate = (state) => dispatch => {
     console.log("here")
@@ -119,6 +120,39 @@ export const addAdvertizer = (formState) => dispatch => {
                 })
             console.log(res.data)
         })
+};
+
+//TODO
+//expects req.body.uname to be inserted in formState
+export const resetPass = (formState) => dispatch => {
+    axios
+        .post(`/api/settings/resetpass`, formState)
+        .then(res => {
+                dispatch({
+                    //fetch new settings
+                    type: GET_SETTINGS,
+                    payload: res.data
+                })
+            console.log(res.data)
+        })
+};
+
+export const retrievePass = (state) => dispatch => {
+    console.log("here")
+    axios
+        .get(`/api/accounts/${state.uname}/${state.pass}`)
+        .then(res => {
+                dispatch({
+                    type: RETRIEVE_PASS,
+                    payload: res.data
+                })
+            console.log(res.data)
+        })
+        .catch( res => 
+            dispatch({
+                type: LOGIN_ERROR,
+            })
+        )
 };
 
 export const getUser = () => dispatch => {

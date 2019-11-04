@@ -9,6 +9,7 @@ export const LOGIN_VALIDATION = 'LOGIN_VALIDATION';
 export const LOGIN_ERROR = 'LOGIN_ERROR';
 export const GET_USER = 'GET_USER';
 export const ADD_USER = 'ADD_USER';
+export const RETRIEVE_PASS = 'RETRIEVE_PASS';
 
 // settings page
 export const GET_SETTINGS = 'GET_SETTINGS';

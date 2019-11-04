@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types';
+import Card from '../layout/Card';
 
 //const PassengerJobItem = (props) => {
 class PassengerJobItem extends React.Component {
@@ -22,6 +23,7 @@ class PassengerJobItem extends React.Component {
     itemStyle = () => {
         return {
             padding: "3px",
+            display: 'inline-block',
             background: this.state.bid <= 0
                 ? '#f4f4f4'
                 : 'lime',
@@ -31,17 +33,14 @@ class PassengerJobItem extends React.Component {
             
 
     render() {
-        const {uname, startDateTime, endDateTime, 
+        const {driver, startDateTime, endDateTime, 
             origin, end, seats, bid} = this.props.details;
-        return (
-            <div style={this.itemStyle()}>
-                <p>Driver: {uname} | 
-                   Origin: {origin} | 
-                   Destination {end} | 
-                </p><p>
-                   Start: {startDateTime} | 
-                   End: {endDateTime} | 
-                   Seats: {seats} 
+
+        const content = <div>
+                <p> {'Start: '} {startDateTime} 
+                    {'    End: '} {endDateTime} </p>
+                <p> {'Seats: '} {seats} </p>
+                <p> {'Bid: '} {seats} 
                    <input
                     value={this.state.bid}
                     type="number"
@@ -51,9 +50,17 @@ class PassengerJobItem extends React.Component {
                     />
                    <button 
                     onClick={this.props.markBid
-                        .bind(this, uname, startDateTime, this.state.bid)}
+                        .bind(this, driver, startDateTime, this.state.bid)}
                    >BID</button> 
                 </p>
+            </div>
+
+        return (
+            <div style={this.itemStyle()}>
+                <Card
+                    title={driver + " : " + origin + " -> " + end}
+                    msg={content}
+                />
             </div>
         );
     }

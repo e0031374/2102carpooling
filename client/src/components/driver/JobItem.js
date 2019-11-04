@@ -2,26 +2,32 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { delDriverJob  } from '../../actions/driverActions';
+import Card from '../layout/Card';
 
 const JobItem = (props) => {
-    console.log(props.job.user);
-    const { user, startDateTime , origin, endDateTime} = props.job;
+    console.log(props.job.uname);
+    const { uname, startDateTime , origin, endDateTime} = props.job;
     const onClick = (e) => {
-        props.delDriverJob(user,startDateTime);
+        const out = `Delete Job: ${uname}, ${startDateTime}`;
+        console.log(out);
+        props.delDriverJob(uname,startDateTime);
     }
 
+    const content = <div>
+            <p> {'Origin: '} {origin} </p>
+            <p> {'Start: '} {startDateTime} 
+                {'    End: '} {endDateTime} </p>
+            <p> {'HighestBid: '} {' '} 
+                <button onClick={onClick}
+                >x</button>
+            </p>
+        </div>
+
     return (
-    <div>
-        <p> {user} {' | Origin: '} 
-        {origin} {' | Start: '} 
-        {startDateTime} {' | End: '} 
-        {endDateTime} {' | Highest Bid: '} 
-        current highest bid? 
-        {' '}
-        <button onClick={onClick}
-        >x</button>
-        </p>
-    </div>
+        <Card
+            title={origin + " : " + startDateTime}
+            msg={content}
+        />
     );
 }
 

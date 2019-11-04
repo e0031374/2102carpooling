@@ -1,5 +1,6 @@
 import React from 'react'
 
+import JobProfile from '../driver/JobProfile'
 import JobPanel from '../driver/JobPanel'
 import AddJobItem from '../driver/AddJobItem'
 import DriverSidebar from '../driver/DriverSidebar'
@@ -16,13 +17,8 @@ const Driver = (props) => {
             <div>
                 <Header />
                 <h1>Driver Screen</h1>
-                <div style={innerStyle}>
-                    <DriverSidebar style={innerStyle} />
-                    <div style={innerStyle}>
-                        <h1>Driver Screen</h1>
-                        <JobPanel />
-                        <AddJobItem />
-                    </div>
+                <div >
+                    <DriverSidebar/>
                 </div>
             </div>
         );

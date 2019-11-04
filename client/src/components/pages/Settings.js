@@ -5,6 +5,7 @@ import { getSettings } from '../../actions/loginActions';
 import AddPassengerForm from '../settings/AddPassengerForm';
 import AddDriverForm from '../settings/AddDriverForm';
 import AddAdvertizerForm from '../settings/AddAdvertizerForm';
+import ChangePasswordForm from '../settings/ChangePasswordForm';
 import PropTypes from 'prop-types';
 
 
@@ -33,6 +34,7 @@ class Settings extends React.Component {
                 {addPassengerForm}
                 {addDriverForm}
                 {addAdvertizerForm}
+                <ChangePasswordForm/>
             </div>
         );
     }

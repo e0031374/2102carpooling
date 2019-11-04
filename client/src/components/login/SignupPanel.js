@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { addAccount } from '../../actions/loginActions';
+import FixedCard from '../layout/FixedCard';
 
 
 class SignupPanel extends React.Component {
@@ -28,8 +29,7 @@ class SignupPanel extends React.Component {
     }    
 
     render() {
-        return ( 
-            <form onSubmit={this.onSubmit}>
+        const formSignUp = <form onSubmit={this.onSubmit}>
                 <p>Sign Up for Carpooling </p>
                 <div>
                     <label>Desired Uname</label>
@@ -53,8 +53,20 @@ class SignupPanel extends React.Component {
                 </div>
                 <button>Submit</button>
             </form>
+        return(
+            <div style={cardStyle}>
+                <FixedCard
+                    title={'SignUp'}
+                    msg={formSignUp}
+                />
+            </div>
         ) 
     }
+}
+
+const cardStyle = {
+    display: 'inline-block',
+    width: '400px',
 }
 
 const  mapStateToProps = state => ({

@@ -1,12 +1,12 @@
 import React from 'react';
-import { loginValidate, getSettings } from '../../actions/loginActions';
+import { retrievePass, getSettings } from '../../actions/loginActions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from  'react-router-dom';
 import FixedCard from '../layout/FixedCard';
 import { Link } from 'react-router-dom';
 
-class LoginPanel extends React.Component {
+class ForgotPasswordForm extends React.Component {
 
     state = {
         uname: "",
@@ -23,22 +23,25 @@ class LoginPanel extends React.Component {
     onSubmit = (e) => {
         e.preventDefault();
         const user = this.state.uname;
-        this.props.loginValidate({...this.state});
+        this.props.retrievePass({...this.state});
 
-        if (this.props.login.isLoggedIn) {
-            console.log("login success");
-            //route to homepage
-        } else {
-            console.log("login failure");
-            this.setState({...this.state, 
-                msg: this.props.login.authError});
-        }
+        //if (this.props.login.isLoggedIn) {
+        //    console.log("login success");
+        //    //route to homepage
+        //} else {
+        //    console.log("login failure");
+        //    this.setState({...this.state, 
+        //        msg: this.props.login.authError});
+        //}
         this.props.getSettings(user);
     }
     render () {
-        if (this.props.login.user) return <Redirect to='/home' />
+        const passRetrieved = <FixedCard
+                title={'Password retireved Successfully'}
+                msg={`Password: ${this.props.login.retPass}`}
+            />
         const formLogin = <form onSubmit={this.onSubmit}>
-                <label>Login into Carpooling </label>
+                <label>Key in any old password</label>
                 <div>
                      <label htmlFor="unameField">UserName: </label>
                      <input
@@ -51,7 +54,7 @@ class LoginPanel extends React.Component {
                      />
                 </div> 
                 <div>
-                     <label htmlFor="passField">Password: </label>
+                     <label htmlFor="passField">Any Old Password: </label>
                      <input
                          id="passField"
                          type="text"
@@ -63,35 +66,32 @@ class LoginPanel extends React.Component {
                 </div> 
                 <button
                 >Submit</button>
-                <p>{'Forgot your password? '}
-                    <Link to="/forgot">click here</Link>
-                </p>
             </form>
+        const visual = this.props.login.claimed
+            ? passRetrieved
+            : <FixedCard title={'Retrieve Passeword'} msg={formLogin}/>
         return (
             <div style={cardStyle}>
-                <FixedCard
-                    title={'Login'}
-                    msg={formLogin}
-                />
+                {visual}
             </div>
         );
     }
 }
 
 const cardStyle = {
-    display: 'inline-block',
     width: '400px',
 }
 
-LoginPanel.propTypes = {
-    loginValidate : PropTypes.func.isRequired,
+ForgotPasswordForm.propTypes = {
+    retrievePass : PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
     login: state.login,
 });
+
 export default connect(
     mapStateToProps, 
-    {loginValidate,
+    {retrievePass,
      getSettings   
-})(LoginPanel);
+})(ForgotPasswordForm);

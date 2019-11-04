@@ -111,4 +111,24 @@ WHERE A.uname=$1`;
     });
 });
 
+// @router POST api/settings/resetpass
+// @desc returns current password given a corrent previously used password
+// @access public
+
+//in Postman, Headers: key: content-type; values: json
+router.post('/resetpass', (req, res) => {
+    const query = 'given a previous password, return current if exist';
+
+    const param = [req.body.uname];
+    console.log(param);
+    //not allowed to send multiple queries
+    pool.query(query, param, (err,data) => {
+        if (err) {
+            console.log(err);
+            throw err;
+        }
+        res.status(200).json({success: true, msg: 'recover success', pass: req.body.pass});
+    });
+});
+
 module.exports = router;
