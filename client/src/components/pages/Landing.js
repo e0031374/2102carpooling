@@ -6,6 +6,7 @@ import Driver from './Driver';
 import Passenger from './Passenger';
 import Advertizer from './Advertizer';
 import Settings from './Settings';
+import Member from './Member';
 
 class Landing extends React.Component {
     state = { activeItem: 'home' }
@@ -18,6 +19,7 @@ class Landing extends React.Component {
             : activeItem === 'driver' ? <Driver/>
             : activeItem === 'advertizer' ? <Advertizer/>
             : activeItem === 'settings' ? <Settings/>
+            : activeItem === 'member' ? <Member/>
             : <Home/>;
 
         return (
@@ -46,6 +48,11 @@ class Landing extends React.Component {
                     <Menu.Item
                         name='settings'
                         active={activeItem === 'settings'}
+                        onClick={this.handleItemClick}
+                    />
+                    <Menu.Item
+                        name='member'
+                        active={activeItem === 'member'}
                         onClick={this.handleItemClick}
                     />
                 </Menu>

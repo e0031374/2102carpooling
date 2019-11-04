@@ -1,6 +1,7 @@
 import React from 'react';
 import LoginPanel from '../login/LoginPanel';
 import SignupPanel from '../login/SignupPanel';
+import styles from '../../static/css/Home.module.css';
 import {
     Button,
     Divider,
@@ -42,7 +43,7 @@ class Login extends React.Component {
         </Segment>
         return (
             <div>
-                <div style={titleStyle}>
+                <div className={styles.titleStyle}>
                     <Header size='huge'>CARPOOLING</Header>
                     <Header size='medium'>a 2102 project</Header>
                 </div>
@@ -59,6 +60,9 @@ class Login extends React.Component {
 }
 
 const titleStyle = {
+    backgroundColor: '#ee6e73',
+    fontWeight: "300px",
+    color: "#fffdd0",
     textAlign: 'center',
     padding: '30px',
 }

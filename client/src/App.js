@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import Passenger from './components/pages/Passenger';
 import Driver from './components/pages/Driver';
+import Member from './components/pages/Member';
 import JobProfile from './components/driver/JobProfile';
 import CarProfile from './components/driver/subpages/CarProfile';
 import Insurance from './components/driver/subpages/Insurance';
@@ -35,6 +36,7 @@ class App extends React.Component {
                         <Route path="/driver/jobprofile" component={JobProfile}/>
                         <Route path="/driver/carprofile" component={CarProfile}/>
                         <Route path="/driver/insurance" component={Insurance}/>
+                        <Route path="/member" component={Member}/>
                         <Route path="/advertizer" component={Advertizer}/>
 			            <Route path="/settings" component={Settings}/>
 			            <Route path="/forgot" component={ForgotPass}/>
