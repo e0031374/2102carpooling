@@ -1,40 +1,28 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import Card from '../../layout/Card';
+import { Card } from 'semantic-ui-react';
 
 class CarItem extends React.Component {
     render() {
         return (
-            <Card title={'Car'} msg={'Honda Civic'}/>
+            <Card>
+                <Card.Content>
+                    <Card.Header>{this.props.car.brand}</Card.Header>
+                    <Card.Meta>
+                        {this.props.car.type}
+                    </Card.Meta>
+                    <Card.Description>
+                        {this.props.car.seat}
+                    </Card.Description>
+                </Card.Content>
+            </Card>
         );
     }
 }
 
-//class JobItem extends React.Component {
-//    render() {
-//        console.log(this.props.job.user);
-//        const { user, startDateTime , origin, endDateTime} = this.props.job;
-//
-//        return (
-//        <div>
-//            <p> {user} {' | Origin: '} 
-//            {origin} {' | Start: '} 
-//            {startDateTime} {' | End: '} 
-//            {endDateTime} {' | Highest Bid: '} 
-//            current highest bid? 
-//            {' '}
-//            <button onClick={this.props.delJob.bind(this, user, startDateTime)}
-//            >x</button>
-//            </p>
-//        </div>
-//        );
-//    }
-//}
-//
-//
-//JobItem.propTypes = {
-//    job: PropTypes.object.isRequired,
-//    delJob: PropTypes.func.isRequired,
-//}
+CarItem.propTypes = {
+    car: PropTypes.object.isRequired,
+}
+
 
 export default CarItem;

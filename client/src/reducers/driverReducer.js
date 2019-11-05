@@ -4,9 +4,19 @@ import { DRIVER_JOBS_LOADING, GET_DRIVER_JOBS,
 } from '../actions/types';
 const initialState = {
     jobs: [],
-    cars: [],
+    car : {
+        brand: "Honda",
+        type: "Civic",
+        seat: 4,
+    },
     insurance: [],
     loading: false,
+
+    insuranceCompanies: [ 
+        { cname: 'Aviva', contactnum: '1234' },
+        { cname: 'Virgin', contactnum: '1235' },
+        { cname: 'Great Eastern', contactnum: '1236' },
+    ],
 }
 
 export default function(state = initialState, action) {
@@ -34,6 +44,12 @@ export default function(state = initialState, action) {
                 insurance: action.payload.insurance,
                 loading: false
             };
+        //case GET_INSURANCE_COMPANIES:
+        //    return {
+        //        ...state,
+        //        insuranceCompanies: action.payload.insuranceCompanies,
+        //        loading: false
+        //    };
         default:
             return state
     }

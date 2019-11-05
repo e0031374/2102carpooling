@@ -3,46 +3,8 @@ import Empty from '../member/Empty';
 import MemberItems from '../member/MemberItems';
 import MemberCard from '../member/MemberCard';
 import { Search, Grid, Header, Segment, Label } from 'semantic-ui-react';
-
-const members = [
-    {
-        uname: "root",
-        bios: "the first",
-        rating: 2,
-    },{
-        uname: "user",
-        bios: "generic user",
-        rating: 1,
-    }, {
-        uname: "rogers",
-        bios: "70 old vet",
-        rating: 0,
-    }, {
-        uname: "stark",
-        bios: "you know who i am",
-        rating: 2,
-    }, {
-        uname: "banner",
-        bios: "green",
-        rating: 1,
-    }
-]
-
-//const source = _.times(5, () => ({
-//    uname: 
-//    description:
-//    rating: 
-//}));
-//const source = _.times(5, (member) => ({
-//    uname: member.uname,
-//    description: member.bios,
-//    rating: member.rating,
-//}));
-const source = members.map((member) => ({
-    uname: member.uname,
-    description: member.bios,
-    rating: member.rating,
-}));
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
 const initialState = {
         isLoading: false,
@@ -54,6 +16,17 @@ const initialState = {
 const resultRenderer = ({ uname }) => <Label content={uname} />;
 
 class Member extends React.Component {
+
+    componentDidMount() {
+        const members = this.props.member.members;
+        const source = members.map((member) => ({
+            uname: member.uname,
+            description: member.bios,
+            rating: member.rating,
+        }));
+        this.setState({ source });
+    }
+
     state = initialState;
 
     handleResultSelect = (e, {result}) => { 
@@ -64,7 +37,12 @@ class Member extends React.Component {
         this.setState({ isLoading: true, value, select: false });
 
         setTimeout(() => {
-            if (this.state.value.length < 1) return this.setState(initialState)
+            const members = this.state.members;
+            if (this.state.value.length < 1) {
+                this.setState(initialState)
+                this.setState({ members })
+                return
+            }
 
             //const re = new RegExp(_.escapeRegExp(this.state.value), 'i');
             const re = new RegExp(escapeRegExp(this.state.value), 'i');
@@ -72,7 +50,7 @@ class Member extends React.Component {
 
             this.setState({
                 isLoading: false,
-                results: source.filter(isMatch),
+                results: this.state.source.filter(isMatch),
                 //results: _.filter(source, isMatch),
             });
         }, 300);
@@ -210,5 +188,16 @@ function times(n, iteratee) {
 
 //export default times
 
+Member.propTypes = {
+    member: PropTypes.object.isRequired,
+    login: PropTypes.object.isRequired,
+}
 
-export default Member;
+const mapStateToProps = (state) => ({
+    member: state.member,
+});
+
+export default connect(
+    mapStateToProps, 
+    {}
+)(Member);

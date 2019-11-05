@@ -3,7 +3,8 @@ import { Item, Label } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 
 const MemberItems = (props) => {
-    const memberList = props.members.map(member => <MemberItem member={member}/>);
+    const memberList = props
+        .members.map(member => <MemberItem key={member.uname} member={member}/>);
     return (
         <Item.Group>
             {memberList}
@@ -24,7 +25,7 @@ const MemberItem = (props) => (
 )
 
 MemberItems.propTypes = {
-    members: PropTypes.object.isRequired
+    members: PropTypes.array.isRequired
 }
 
 export default MemberItems;

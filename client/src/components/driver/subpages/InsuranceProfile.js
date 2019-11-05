@@ -1,45 +1,44 @@
 import React from 'react';
 
-import DriverSidebar from '../DriverSidebar'
-import Header from '../../layout/Header';
-import CarItem from './CarItem';
-import AddCarForm from './AddCarForm';
+import InsuranceItem from './InsuranceItem';
+import AddInsuranceForm from './AddInsuranceForm';
 import { connect } from 'react-redux';
 import { Card } from 'semantic-ui-react';
 
 
 //this can be slot into the driver screen inplace of getjob and addjobitem
 // do that with routes much like in App.js
-class CarProfile extends React.Component {
+class InsuranceProfile extends React.Component {
 
     state = {
-        car: "",
-        hasCar: false,
+        insurance: "",
+        hasInsurance: false,
     }
 
     componentDidMount() {
         const uname = this.props.login.user;
         // TODO call the fetch car query
-        const { car } = this.props.driver;
-        this.setState({ hasCar: true, car });
+        const { insurance } = this.props.driver;
+        const flag = (insurance !== ""); 
+        this.setState({ hasInsurance: flag, insurance });
     }
 
     render() {
-        const renderItem = this.state.hasCar
-            ? <CarItem car={this.state.car}/>
+        const renderItem = this.state.hasInsurance
+            ? <InsuranceItem insurance={this.state.insurance}/>
             : <Card>
                 <Card.Content>
-                    <Card.Header>No Car Found in Records</Card.Header>
+                    <Card.Header>No Insurance Found in Records</Card.Header>
                 </Card.Content>
               </Card>
         return (
             <div>
-                <h1>Deal with your Car</h1>
+                <h1>Deal with your Insurance</h1>
                 <div>
                     {renderItem}
                 </div>
                 <div>
-                    <AddCarForm/>
+                    <AddInsuranceForm/>
                 </div>
             </div>
         );
@@ -51,4 +50,4 @@ const mapStateToProps = state => ({
     login: state.login,
 });
 
-export default connect(mapStateToProps, {})(CarProfile);
+export default connect(mapStateToProps, {})(InsuranceProfile);

@@ -8,6 +8,8 @@ import Advertizer from './Advertizer';
 import Settings from './Settings';
 import Member from './Member';
 import styles from '../../static/css/Home.module.css';
+import { connect } from 'react-redux';
+import { Redirect } from  'react-router-dom';
 
 class Landing extends React.Component {
     state = { activeItem: 'home' }
@@ -23,6 +25,7 @@ class Landing extends React.Component {
             : activeItem === 'member' ? <Member/>
             : <Home/>;
 
+	    if (this.props.login.user === "") return <Redirect to='/' />
         return (
             <div>
                 <div className={styles.landingStyle}>
@@ -69,4 +72,10 @@ class Landing extends React.Component {
 }
 
 
-export default Landing;
+const mapStateToProps = state => ( {
+    login: state.login,
+});
+
+export default connect(
+    mapStateToProps,
+)(Landing);

@@ -1,3 +1,4 @@
+// DEPRECATED REFER TO CARPROFILE
 import React from 'react';
 import PropTypes from 'prop-types';
 import { getDriverJobs } from '../../actions/driverActions';

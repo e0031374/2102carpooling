@@ -31,3 +31,8 @@ export const GET_INSURANCE = 'GET_INSURANCE';
 // ads screen
 export const ADS_LOADING = 'ADS_LOADING';
 export const GET_ADS = 'GET_ADS';
+
+
+// member screen unimplemented
+export const GET_MEMBERS = 'GET_MEMBERS';
+export const GET_FEEDBACK = 'GET_FEEDBACK';

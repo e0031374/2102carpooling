@@ -1,15 +1,22 @@
 import React from 'react';
 import { Card, Label, Button, Header, Modal, Container, 
     Form, TextArea, Radio } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-export default class MemberRatingForm extends React.Component {
+// TODO submit form action only, reducer will be in the receive feedback section
+class MemberRatingForm extends React.Component {
     state = { 
         modalOpen: false,
         uname: "", // auto fill with current user name
         rating: 0, // or whatever previous rating was
         feedback: "", // message to be stored
     };
+
+    componentDidMount() {
+        console.log("weee");
+        this.setState({ uname: this.props.login.user });
+    }
     
     handleOpen = () => this.setState({ modalOpen: true });
     handleClose = () => this.setState({ modalOpen: false });
@@ -20,6 +27,9 @@ export default class MemberRatingForm extends React.Component {
 
     onSubmit = (e) => {
         e.preventDefault();
+        console.log(this.state);
+
+        this.handleClose();
         //const user = this.state.uname;
         //this.props.loginValidate({...this.state});
 
@@ -76,7 +86,7 @@ export default class MemberRatingForm extends React.Component {
                     </Form>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button color='green' onClick={this.handleClose} inverted>
+                    <Button color='green' onClick={this.onSubmit} inverted>
                         Submit
                     </Button>
                     <Button color='red' onClick={this.handleClose} inverted>
@@ -87,3 +97,16 @@ export default class MemberRatingForm extends React.Component {
         );
     }
 }
+
+MemberRatingForm.propTypes = {
+    login: PropTypes.object.isRequired,
+}
+
+const mapStateToProps = (state) => ({
+    login: state.login,
+});
+
+export default connect(
+    mapStateToProps, 
+    {}
+)(MemberRatingForm);
