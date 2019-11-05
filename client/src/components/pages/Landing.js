@@ -7,6 +7,7 @@ import Passenger from './Passenger';
 import Advertizer from './Advertizer';
 import Settings from './Settings';
 import Member from './Member';
+import styles from '../../static/css/Home.module.css';
 
 class Landing extends React.Component {
     state = { activeItem: 'home' }
@@ -24,6 +25,9 @@ class Landing extends React.Component {
 
         return (
             <div>
+                <div className={styles.landingStyle}>
+                    <h2>CARPOOLING: a 2102 project</h2>
+                </div>
                 <Menu attached='top' tabular>
                     <Menu.Item
                         name='home'

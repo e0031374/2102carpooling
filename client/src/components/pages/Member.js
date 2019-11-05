@@ -1,11 +1,8 @@
 import React from 'react';
-import { Search, Grid, Header, Segment } from 'semantic-ui-react';
-
-const initialState = {
-        isLoading: false,
-        results: [],
-        value: '',
-}
+import Empty from '../member/Empty';
+import MemberItems from '../member/MemberItems';
+import MemberCard from '../member/MemberCard';
+import { Search, Grid, Header, Segment, Label } from 'semantic-ui-react';
 
 const members = [
     {
@@ -47,12 +44,24 @@ const source = members.map((member) => ({
     rating: member.rating,
 }));
 
+const initialState = {
+        isLoading: false,
+        results: [],
+        value: '',
+        select: false,
+}
+
+const resultRenderer = ({ uname }) => <Label content={uname} />;
+
 class Member extends React.Component {
     state = initialState;
 
-    handleResultSelect = (e, {result}) => this.setState({ value:result.uname });
+    handleResultSelect = (e, {result}) => { 
+        this.setState({ value:result.uname, select: true });
+    }
+
     handleSearchChange = (e, {value}) => {
-        this.setState({ isLoading: true, value });
+        this.setState({ isLoading: true, value, select: false });
 
         setTimeout(() => {
             if (this.state.value.length < 1) return this.setState(initialState)
@@ -71,6 +80,12 @@ class Member extends React.Component {
 
     render() {
         const { isLoading, value, results } = this.state;
+        const displayResult = this.state.select
+            ? <MemberCard member={this.state.results[0]}/>
+            : this.state.results.length < 1
+                ? <Empty/>
+                : <MemberItems members={results}/>;
+
 
         return (
             <Grid>
@@ -79,6 +94,7 @@ class Member extends React.Component {
                         loading={isLoading}
                         onResultSelect={this.handleResultSelect}
                         onSearchChange={this.handleSearchChange}
+                        resultRenderer={resultRenderer}
                         //onSearchChange={_.debounce(this.handleSearchChange, 500, {
                         //    leading: true,
                         //})}
@@ -89,20 +105,37 @@ class Member extends React.Component {
                 </Grid.Column>
                 <Grid.Column width={10}>
                     <Segment>
-                        <Header>State</Header>
-                        <pre style={{ overflowX: 'auto' }}>
-                            {JSON.stringify(this.state, null, 2)}
-                        </pre>
-                        <Header>Options</Header>
-                        <pre style={{ overflowX: 'auto' }}>
-                            {JSON.stringify(this.state, null, 2)}
-                        </pre>
+                        {displayResult}    
                     </Segment>
                 </Grid.Column>
             </Grid>
         );
     }
 }
+
+// create a card and model for user?
+
+const searchContainer = {
+    display: "flex",
+    justifyContent: "center",
+    margin: "20px",
+}
+
+const resultContainer = {
+    display: "flex",
+    justifyContent: "center",
+    margin: "20px",
+}
+                //<Grid.Column width={6}>
+                //<Grid.Column width={10}>
+                        //<Header>State</Header>
+                        //<pre style={{ overflowX: 'auto' }}>
+                        //    {JSON.stringify(this.state, null, 2)}
+                        //</pre>
+                        //<Header>Options</Header>
+                        //<pre style={{ overflowX: 'auto' }}>
+                        //    {JSON.stringify(this.state, null, 2)}
+                        //</pre>
 
 //https://github.com/lodash/lodash/blob/master/escapeRegExp.js
 /**

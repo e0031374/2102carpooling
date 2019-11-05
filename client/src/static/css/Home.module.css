@@ -1,0 +1,27 @@
+
+.titleStyle {
+    background-color: #ee6e73;
+    font-weight: 300px;
+    color: #fff;
+    text-align: center;
+    padding: 30px;
+    margin-bottom: 30px;
+}
+
+.landingStyle {
+    background-color: #ee6e73;
+    font-weight: 300px;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.text {
+    font-weight: 300px;
+    color: #fffdd0;
+}
+
+.ui.header {
+    color: #fffdd0 !important;
+}

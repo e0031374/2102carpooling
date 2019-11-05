@@ -44,8 +44,8 @@ class Login extends React.Component {
         return (
             <div>
                 <div className={styles.titleStyle}>
-                    <Header size='huge'>CARPOOLING</Header>
-                    <Header size='medium'>a 2102 project</Header>
+                    <h1>CARPOOLING</h1>
+                    <h3>a 2102 project</h3>
                 </div>
                 {seg}
             </div>
@@ -62,7 +62,7 @@ class Login extends React.Component {
 const titleStyle = {
     backgroundColor: '#ee6e73',
     fontWeight: "300px",
-    color: "#fffdd0",
+    color: "#fff",
     textAlign: 'center',
     padding: '30px',
 }
