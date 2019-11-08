@@ -1,29 +1,30 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import JobProfile from './JobProfile';
-import CarProfile from './subpages/CarProfile';
-import Insurance from './subpages/Insurance';
+import PassengerPanel from './PassengerPanel';
+import WinProfile from './WinProfile';
 import { Menu, Grid, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { getJobs, deleteJob } from '../../actions/jobActions';
 import { getInsuranceCompanies } from '../../actions/driverActions';
+import { getWinBids } from '../../actions/passengerActions';
 
-class DriverSidebar extends React.Component {
-    state = { activeItem: 'jobprofile' }
+class PassengerSidebar extends React.Component {
+    state = { activeItem: 'passengerpanel' }
 
     handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
     componentDidMount() {
-        this.props.getInsuranceCompanies();
+        this.props.getWinBids(this.props.login.user);
     }
 
     render() {
         const { activeItem } = this.state;
-        const renderItem = activeItem === 'jobprofile'
-            ? <JobProfile/>
-            : activeItem === 'carprofile' ? <CarProfile/>
-            : activeItem === 'insurance' ? <Insurance/>
-            : <JobProfile/>;
+        const renderItem = activeItem === 'passengerpanel'
+            ? <PassengerPanel/>
+            : activeItem === 'winprofile' ? <WinProfile/>
+//            : activeItem === 'insurance' ? <Insurance/>
+            : <PassengerPanel/>;
+        console.log(this.props.passenger);
 
         return (
             <div style={container}>
@@ -32,18 +33,13 @@ class DriverSidebar extends React.Component {
                 <Grid.Column width={4}>
                 <Menu pointing seconday vertical>
                     <Menu.Item
-                        name='jobprofile'
-                        active={activeItem === 'jobprofile'}
+                        name='passengerpanel'
+                        active={activeItem === 'passengerpanel'}
                         onClick={this.handleItemClick}
                     />
                     <Menu.Item
-                        name='carprofile'
-                        active={activeItem === 'carprofile'}
-                        onClick={this.handleItemClick}
-                    />
-                    <Menu.Item
-                        name='insurance'
-                        active={activeItem === 'insurace'}
+                        name='winprofile'
+                        active={activeItem === 'winprofile'}
                         onClick={this.handleItemClick}
                     />
                 </Menu>
@@ -61,17 +57,21 @@ class DriverSidebar extends React.Component {
 
 
 }
-
+                    //<Menu.Item
+                    //    name='insurance'
+                    //    active={activeItem === 'insurace'}
+                    //    onClick={this.handleItemClick}
+                    ///>
 const container = {
 }
 
-//const DriverSidebar = (props) => {
+//const PassengerSidebar = (props) => {
 //    return (
 //        <div> 
 //            <h3>Driver Stuff</h3>
 //            <ul>
-//                <li><Link to="/driver/jobprofile">Job Profile</Link></li>
-//                <li><Link to="/driver/carprofile">Car Profile</Link></li>
+//                <li><Link to="/driver/passengerpanel">Job Profile</Link></li>
+//                <li><Link to="/driver/winprofile">Car Profile</Link></li>
 //                <li><Link to="/driver/insurance">Buy Insurance</Link></li>
 //            </ul>
 //        </div>
@@ -86,7 +86,7 @@ const mapStateToProps = (state) => ({
 
 export default connect(
     mapStateToProps, 
-    {getJobs, deleteJob, getInsuranceCompanies }
-)(DriverSidebar);
-//export default DriverSidebar;
+    { getWinBids }
+)(PassengerSidebar);
+//export default PassengerSidebar;
 

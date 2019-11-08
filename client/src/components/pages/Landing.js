@@ -7,13 +7,24 @@ import Passenger from './Passenger';
 import Advertizer from './Advertizer';
 import Settings from './Settings';
 import Member from './Member';
+import Ewallet from './Ewallet';
+import History from './History';
 import styles from '../../static/css/Home.module.css';
 import { connect } from 'react-redux';
+import { getMembers } from '../../actions/memberActions';
+import { getBalance } from '../../actions/ewalletActions';
 import { Redirect } from  'react-router-dom';
 
 class Landing extends React.Component {
     state = { activeItem: 'home' }
     handleItemClick = (e, {name}) => this.setState({activeItem:name});
+
+    componentDidMount() {
+        this.props.getMembers();
+        this.props.getBalance(this.props.login.user);
+        console.log(this.props.ewallet);
+        console.log(this.props.login);
+    }
 
     render() {
         const { activeItem } = this.state;
@@ -23,6 +34,8 @@ class Landing extends React.Component {
             : activeItem === 'advertizer' ? <Advertizer/>
             : activeItem === 'settings' ? <Settings/>
             : activeItem === 'member' ? <Member/>
+            : activeItem === 'ewallet' ? <Ewallet/>
+            : activeItem === 'history' ? <History/>
             : <Home/>;
 
 	    if (this.props.login.user === "") return <Redirect to='/' />
@@ -62,6 +75,16 @@ class Landing extends React.Component {
                         active={activeItem === 'member'}
                         onClick={this.handleItemClick}
                     />
+                    <Menu.Item
+                        name='ewallet'
+                        active={activeItem === 'ewallet'}
+                        onClick={this.handleItemClick}
+                    />
+                    <Menu.Item
+                        name='history'
+                        active={activeItem === 'history'}
+                        onClick={this.handleItemClick}
+                    />
                 </Menu>
                 <Segment attached='bottom'>
                     {renderItem}
@@ -74,8 +97,10 @@ class Landing extends React.Component {
 
 const mapStateToProps = state => ( {
     login: state.login,
+    ewallet: state.ewallet,
 });
 
 export default connect(
     mapStateToProps,
+    {getMembers, getBalance}
 )(Landing);

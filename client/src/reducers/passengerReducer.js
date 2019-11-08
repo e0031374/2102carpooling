@@ -1,9 +1,10 @@
 
-import { GET_AVAILABLE_JOBS, PASSENGER_JOBS_LOADING,
+import { GET_AVAILABLE_JOBS, PASSENGER_JOBS_LOADING, GET_WIN_BIDS,
     BID_AVAILABLE_JOBS } from '../actions/types';
 const initialState = {
     jobs: [],
     loading: false,
+    winbids: [],
 }
 
 export default function(state = initialState, action) {
@@ -12,6 +13,12 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 jobs: action.payload.jobs,
+                loading: false
+            };
+        case GET_WIN_BIDS:
+            return {
+                ...state,
+                winbids: action.payload.bids,
                 loading: false
             };
         case PASSENGER_JOBS_LOADING:

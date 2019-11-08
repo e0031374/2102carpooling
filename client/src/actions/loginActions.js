@@ -138,7 +138,7 @@ export const resetPass = (formState) => dispatch => {
 };
 
 export const retrievePass = (state) => dispatch => {
-    console.log("here")
+    console.log("hee")
     axios
         .get(`/api/accounts/${state.uname}/${state.pass}`)
         .then(res => {
@@ -155,8 +155,20 @@ export const retrievePass = (state) => dispatch => {
         )
 };
 
-export const getUser = () => dispatch => {
-    return {
-        type: GET_USER,
-    };
+export const changePass = (formState) => dispatch => {
+    console.log("here")
+    axios
+        .post(`/api/settings/changepass`, formState)
+        //.then(res => {
+        //        dispatch({
+        //            type: LOGIN_VALIDATION,
+        //            payload: res.data
+        //        })
+        //    console.log(res.data)
+        //})
+        //.catch( res => 
+        //    dispatch({
+        //        type: LOGIN_ERROR,
+        //    })
+        //)
 };

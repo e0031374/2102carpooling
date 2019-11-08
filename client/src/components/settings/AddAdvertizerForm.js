@@ -13,6 +13,7 @@ class AddAdvertizerForm extends React.Component {
     }
 
     onComponentDidMount() {
+        this.props.getSettings(this.props.login.user);
         //this doesnt work since
         //  component only mounts once and setState will update it
         //this.setState({
@@ -57,8 +58,10 @@ class AddAdvertizerForm extends React.Component {
                     >Register to be an Advertizer</Form.Button>
                 </div>
             </Form>;
-        const alrAd = this.props.login.isAd
-            ? <p> You already are an Advertizer </p>
+        const alrAd = this.props.login.isAd 
+            ? <div><p> You already are an Advertizer </p>
+                <Redirect to="/landing" />
+              </div>
             : form;
         return (
             <div style={container}>

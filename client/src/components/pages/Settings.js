@@ -12,25 +12,34 @@ import PropTypes from 'prop-types';
 
 
 class Settings extends React.Component {
+
+    //state = {
+    //    isdriver: null,
+    //    isad: null,
+    //}
+
     componentDidMount() {
+        //const {isPassenger, isDriver, isAd} = this.props.login;
         this.props.getSettings(this.props.login.user);
+        //this.setState({ isDriver, isAd })
+        //console.log(this.state);
     }
 
     render() {
         const {isPassenger, isDriver, isAd} = this.props.login;
         console.log(this.props.login);
-        const addPassengerForm = isPassenger
-            ? <div>You are a passenger alr</div>  
-            : <AddPassengerForm/>;    
-        const addDriverForm = isDriver
+        //const addPassengerForm = isPassenger
+        //    ? <div>You are a passenger alr</div>  
+        //    : <AddPassengerForm/>;    
+        const addDriverForm = isDriver 
             ? <div>You are a driver alr</div>  
             : <AddDriverForm/>;    
-        const addAdvertizerForm = isAd
-            ? <div>You are an Advertizer alr</div>  
+        const addAdvertizerForm = isAd 
+            ? <div>You are an Advertiser alr</div>  
             : <AddAdvertizerForm/>;    
+        console.log(isAd);
         return (
             <div>
-                {addPassengerForm}
                 {addDriverForm}
                 {addAdvertizerForm}
                 <ChangePasswordForm/>

@@ -1,7 +1,8 @@
 import React from 'react';
 
-import InsuranceItem from './InsuranceItem';
+import InsuranceItems from './InsuranceItems';
 import AddInsuranceForm from './AddInsuranceForm';
+import { getInsurance } from '../../../actions/driverActions';
 import { connect } from 'react-redux';
 import { Card } from 'semantic-ui-react';
 
@@ -11,21 +12,23 @@ import { Card } from 'semantic-ui-react';
 class InsuranceProfile extends React.Component {
 
     state = {
-        insurance: "",
+        insurance: [],
         hasInsurance: false,
     }
 
     componentDidMount() {
         const uname = this.props.login.user;
         // TODO call the fetch car query
+        this.props.getInsurance(this.props.login.user);
         const { insurance } = this.props.driver;
         const flag = (insurance !== ""); 
         this.setState({ hasInsurance: flag, insurance });
     }
 
     render() {
-        const renderItem = this.state.hasInsurance
-            ? <InsuranceItem insurance={this.state.insurance}/>
+        console.log(this.props.driver.insurance);
+        const renderItem = true //this.state.hasInsurance
+            ? <InsuranceItems insurances={this.props.driver.insurance}/>
             : <Card>
                 <Card.Content>
                     <Card.Header>No Insurance Found in Records</Card.Header>
@@ -50,4 +53,5 @@ const mapStateToProps = state => ({
     login: state.login,
 });
 
-export default connect(mapStateToProps, {})(InsuranceProfile);
+export default connect(mapStateToProps, 
+    {getInsurance})(InsuranceProfile);

@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { getSettings } from '../../actions/loginActions';
+import { getSettings, changePass } from '../../actions/loginActions';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {Form, Container } from 'semantic-ui-react';
@@ -8,7 +8,8 @@ import {Form, Container } from 'semantic-ui-react';
 class ChangePasswordForm extends React.Component {
 
     state = {
-        oldpass: "",
+        uname: "",
+        pass: "",
         newpass: "",
         confirmpass: "",
         err: false,
@@ -19,12 +20,19 @@ class ChangePasswordForm extends React.Component {
 
     onCheck = (e, {name, value}) => this.setState({ [name]: ! this.state[name] });
 
+    componentDidMount() {
+        const uname = this.props.login.user;
+        this.setState({ uname });
+        console.log(this.state);
+    }
+
     onSubmit = (e) => {
         e.preventDefault();
         if (this.state.newpass !== this.state.confirmpass) {
             this.setState({ err: true });
         } else {
             //call set password
+            this.props.changePass(this.state);
             this.setState({ ...this.state, redir: true });
         }
         console.log(this.state);
@@ -50,9 +58,9 @@ class ChangePasswordForm extends React.Component {
                 <Form >
                         <Form.Input
                             label="Old Password"
-                            name="oldpass"
+                            name="pass"
                             type="text"
-                            value={this.state.oldpass}
+                            value={this.state.pass}
                             placeholder={this.password}
                             onChange={this.onChange}
                         />
@@ -93,5 +101,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
     mapStateToProps,
-    {getSettings}
+    {getSettings, changePass}
 )(ChangePasswordForm);

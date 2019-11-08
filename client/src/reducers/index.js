@@ -4,6 +4,8 @@ import loginReducer from './loginReducer';
 import passengerReducer from './passengerReducer';
 import driverReducer from './driverReducer';
 import memberReducer from './memberReducer';
+import ewalletReducer from './ewalletReducer';
+import historyReducer from './historyReducer';
 //import authReducer from ...
 
 ///meeting place of reducers
@@ -15,5 +17,7 @@ export default combineReducers({
     driver: driverReducer,
     login: loginReducer,
     member: memberReducer,
+    ewallet: ewalletReducer,
+    history: historyReducer,
     //auth: authReducer
 });

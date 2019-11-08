@@ -6,16 +6,18 @@ import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import PassengerPanel from '../passenger/PassengerPanel';
+import PassengerSidebar from '../passenger/PassengerSidebar';
 import PassengerJobItem from '../passenger/PassengerJobItem';
 import Settings from './Settings';
 
 
 const Passenger = (props) => {
-    if (props.login.isPassenger) {
+    //if (props.login.isPassenger) {
+    if (true) {
         return (
             <div>
                 <h1>Passenger Screen</h1>
-                <PassengerPanel/>
+                <PassengerSidebar/>
             </div>
         );
     } else {

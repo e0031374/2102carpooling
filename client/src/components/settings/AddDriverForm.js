@@ -61,11 +61,12 @@ class AddDriverForm extends React.Component {
                     >Register to be Driver</Form.Button>
                 </div>
             </Form>;
-        const alrDriver = this.props.login.isDriver
+        const alrDriver = this.props.login.isDriver 
             ? <p> You already are an Driver </p>
             : form;
         return (
             <div style={container}>
+                {red}
                 <Container>{alrDriver}</Container>
             </div>
         );

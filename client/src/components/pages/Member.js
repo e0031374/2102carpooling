@@ -3,6 +3,7 @@ import Empty from '../member/Empty';
 import MemberItems from '../member/MemberItems';
 import MemberCard from '../member/MemberCard';
 import { Search, Grid, Header, Segment, Label } from 'semantic-ui-react';
+import { getMembers } from '../../actions/memberActions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -11,6 +12,8 @@ const initialState = {
         results: [],
         value: '',
         select: false,
+    // we do not put source here since state will be periodically
+    // overwritten with initialState and we will lose source
 }
 
 const resultRenderer = ({ uname }) => <Label content={uname} />;
@@ -18,13 +21,19 @@ const resultRenderer = ({ uname }) => <Label content={uname} />;
 class Member extends React.Component {
 
     componentDidMount() {
+        // getting Members here doesnt work for some reason i have 
+        // placed them in the landing.js
+        // this is a hack around it but F!@K
+        //this.props.getMembers();
         const members = this.props.member.members;
+        console.log(members);
         const source = members.map((member) => ({
             uname: member.uname,
-            description: member.bios,
-            rating: member.rating,
+            //description: member.bios,
+            //rating: member.rating,
         }));
         this.setState({ source });
+        console.log(this.state);
     }
 
     state = initialState;
@@ -199,5 +208,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
     mapStateToProps, 
-    {}
+    {getMembers}
 )(Member);

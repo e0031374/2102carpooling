@@ -91,5 +91,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
     mapStateToProps, 
-    {getJobs, deleteJob}
+    {getJobs, deleteJob }
 )(Driver);

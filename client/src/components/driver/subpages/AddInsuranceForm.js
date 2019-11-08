@@ -2,13 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
-//import { addCar } from '../../actions/driverActions';
+import { addInsurance, getInsurance } from '../../../actions/driverActions';
 import { Form, Button } from 'semantic-ui-react';
 
 
 //TODO add reducer
 class AddInsuranceForm extends React.Component {
     state = {
+        uname: "",
         policynum: "",
         insuranceProvider: "",
         uname: "",
@@ -21,8 +22,9 @@ class AddInsuranceForm extends React.Component {
 
     componentDidMount() {
         //const options = optList.map(x => { key: x, text: x, value: x});
-        const optList = this.props.driver.insuranceCompanies;
-        const options = optList.map( (x) => ({ 
+        const {insuranceCompanies} = this.props.driver;
+        console.log(insuranceCompanies);
+        const options = insuranceCompanies.map( x => ({ 
             key: x.cname, 
             text: x.cname, 
             value: x.cname,
@@ -34,6 +36,7 @@ class AddInsuranceForm extends React.Component {
     onSubmit = (e) => {
         e.preventDefault();
         console.log(this.state);
+        this.props.addInsurance(this.state);
 
         // Add car via addCar action
         //this.props.addCar(newCar);
@@ -65,7 +68,10 @@ class AddInsuranceForm extends React.Component {
 }
 
 AddInsuranceForm.propTypes = {
-    //addCar: PropTypes.func.isRequired,
+    addInsurance: PropTypes.func.isRequired,
+    getInsurance: PropTypes.func.isRequired,
+    driver: PropTypes.object.isRequired,
+    login: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -73,4 +79,6 @@ const mapStateToProps = state => ({
     login: state.login,
 });
 
-export default connect(mapStateToProps, {})(AddInsuranceForm);
+export default connect(mapStateToProps, 
+    {addInsurance, getInsurance}
+)(AddInsuranceForm);

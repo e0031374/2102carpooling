@@ -1,6 +1,6 @@
 
 import { DRIVER_JOBS_LOADING, GET_DRIVER_JOBS,
-    BID_AVAILABLE_JOBS, GET_CARS, GET_INSURANCE
+    BID_AVAILABLE_JOBS, GET_CARS, GET_INSURANCE, GET_INSURANCE_COMPANIES
 } from '../actions/types';
 const initialState = {
     jobs: [],
@@ -12,11 +12,12 @@ const initialState = {
     insurance: [],
     loading: false,
 
-    insuranceCompanies: [ 
-        { cname: 'Aviva', contactnum: '1234' },
-        { cname: 'Virgin', contactnum: '1235' },
-        { cname: 'Great Eastern', contactnum: '1236' },
-    ],
+    insuranceCompanies: [],
+    //insuranceCompanies: [ 
+    //    { cname: 'Aviva', contactnum: '1234' },
+    //    { cname: 'Virgin', contactnum: '1235' },
+    //    { cname: 'Great Eastern', contactnum: '1236' },
+    //],
 }
 
 export default function(state = initialState, action) {
@@ -44,12 +45,14 @@ export default function(state = initialState, action) {
                 insurance: action.payload.insurance,
                 loading: false
             };
-        //case GET_INSURANCE_COMPANIES:
-        //    return {
-        //        ...state,
-        //        insuranceCompanies: action.payload.insuranceCompanies,
-        //        loading: false
-        //    };
+        case GET_INSURANCE_COMPANIES: {
+            console.log(action.payload)
+            return {
+                ...state,
+                insuranceCompanies: action.payload.insuranceCompanies,
+                loading: false
+            };
+        }
         default:
             return state
     }

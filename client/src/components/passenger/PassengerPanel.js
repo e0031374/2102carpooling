@@ -2,12 +2,13 @@ import React from 'react'
 import { connect } from 'react-redux';
 import { getSettings } from '../../actions/loginActions';
 import { getAvailableJobs } from '../../actions/passengerActions';
-import PassengerJobItem from './PassengerJobItem';
+import RideAdsCard from './RideAdsCard';
 import PropTypes from 'prop-types';
 
 class PassengerPanel extends React.Component {
     componentDidMount() {
-        this.props.getAvailableJobs(this.props.login.user);
+        //this.props.getAvailableJobs(this.props.login.user);
+        this.props.getAvailableJobs();
         console.log(this.props.passenger);
     }
 
@@ -18,13 +19,13 @@ class PassengerPanel extends React.Component {
         const {loading, jobs} = this.props.passenger;
         if (! loading) {
             return jobs.map( (job) => (
-                <PassengerJobItem
-                    key={job.user + job.startDateTime}
-                    details={job}
-                    markBid={this.markBid}
+                <RideAdsCard
+                    key={job.advertid}
+                    job={job}
                 />
             ));
         } else {
+            // use RideAds modal instead, only one bid submit
             return <h1> ERROR LOADING JOBS </h1>
         }
     }

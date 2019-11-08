@@ -10,6 +10,7 @@ class SignupPanel extends React.Component {
     state = {
         uname: "",
         pass: "",
+        ccnum: "",
         driver: false,
         advert: false,
         passenger: true,
@@ -51,6 +52,16 @@ class SignupPanel extends React.Component {
                         name="pass"
                         placeholder="password"
                         value={this.state.pass}
+                        onChange={this.onChange}
+                    />
+                </div>
+                <div>
+                    <Form.Input 
+                        label="Credit Card Number"
+                        type="number"
+                        name="ccnum"
+                        placeholder="numeric only"
+                        value={this.state.ccnum}
                         onChange={this.onChange}
                     />
                 </div>

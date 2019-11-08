@@ -1,8 +1,8 @@
 
 import axios from 'axios';
 import { GET_DRIVER_JOBS, DRIVER_JOBS_LOADING,
-    BID_AVAILABLE_JOBS,  
-    GET_CARS, GET_INSURANCE } from '../actions/types';
+    BID_AVAILABLE_JOBS, ADD_INSURANCE, 
+    GET_CARS, GET_INSURANCE, GET_INSURANCE_COMPANIES } from '../actions/types';
 
 export const getDriverJobs = (uname) => dispatch => {
     dispatch(driverJobsLoading());
@@ -82,10 +82,23 @@ export const addCars = (formState) => dispatch => {
         })
 };
 
+export const getInsuranceCompanies = () => dispatch => {
+    //dispatch(driverJobsLoading());
+    axios
+        .get(`/api/drivers/insurance/`)
+        .then(res => {
+                dispatch({
+                    type: GET_INSURANCE_COMPANIES,
+                    payload: res.data
+                })
+            console.log(res.data)
+        })
+};
+
 export const getInsurance = (uname) => dispatch => {
     //dispatch(driverJobsLoading());
     axios
-        .get(`/api/jobs/drivers/insurance/${uname}`)
+        .get(`/api/drivers/insurance/${uname}`)
         .then(res => {
                 dispatch({
                     type: GET_INSURANCE,
@@ -96,15 +109,15 @@ export const getInsurance = (uname) => dispatch => {
 };
 
 export const addInsurance = (formState) => dispatch => {
-    dispatch(driverJobsLoading());
+    //dispatch(getInsurance(formState.uname));
     axios
         //.post(`/api/accounts/`, formState)
-        .post(`/api/jobs/drivers/insurance/`, formState)
-        .then(res => {
-                dispatch({
-                    type: GET_INSURANCE,
-                    payload: res.data
-                })
-            console.log(res.data)
-        })
+        .post(`/api/drivers/insurance/`, formState)
+        //.then(res => {
+        //        dispatch({
+        //            type: GET_INSURANCE,
+        //            payload: res.data
+        //        })
+        //    console.log(res.data)
+        //})
 };

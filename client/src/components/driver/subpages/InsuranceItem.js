@@ -7,7 +7,7 @@ class InsuranceItem extends React.Component {
         return (
             <Card>
                 <Card.Content>
-                    <Card.Header>{this.props.insurance.policyProvider}</Card.Header>
+                    <Card.Header>{this.props.insurance.insuranceprovider}</Card.Header>
                     <Card.Meta>
                         {this.props.insurance.policynum}
                     </Card.Meta>

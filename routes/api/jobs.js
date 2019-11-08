@@ -15,6 +15,29 @@ router.get("/passengers/:uname", (req, res) => {
 })
 
 // @router GET api/jobs
+// @desc fetch all available jobs to be post onto passenger screen
+// @access public
+router.get("/passengers/", (req, res) => {
+    const sql_query = `SELECT * FROM Advertisement WHERE (ridedate IS NOT NULL) AND (start_time IS NOT NULL)`;
+    //const sql_query = `SELECT * FROM Advertisement WHERE (ridedate IS NOT NULL) AND (start_time IS NOT NULL) AND (ridedate > CURRENT_TIMESTAMP)`;
+    pool.query(sql_query, (err,data) => {
+        if (err) {
+            console.log(err);
+            throw err;
+        }
+        //console.log(data);
+        console.log(sql_query);
+        console.log(data.rows);
+        if (data.rows.length >= 1) {
+            res.status(200).json({success: true, jobs: data.rows });
+        } else {
+            res.status(400).json({success: false, msg: 'invalid credentials'});
+        }
+        //res.json(data.rows)
+    });
+})
+
+// @router GET api/jobs
 // @desc fetch all available jobs that the driver has 
 // @access public
 router.get("/drivers/:uname", (req, res) => {
