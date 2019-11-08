@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { getDriverJobs, delDriverJob } from '../../actions/driverActions';
 import { connect } from 'react-redux';
 
-import JobItem from '../driver/JobItem'
+import JobCard from '../driver/JobCard'
 
 class JobPanel extends React.Component {
 
@@ -15,12 +15,11 @@ class JobPanel extends React.Component {
         console.log(this.props.driver.jobs);
         const { jobs } = this.props.driver;
         return jobs.map(job => ( 
-            <JobItem 
-            key={job.startDateTime}
+            <JobCard 
+            key={job.advertid}
             job={job} 
-            delDriverJob={delDriverJob}
             />
-        )); //<JobItem />;
+        )); //<JobCard />;
     }
 }
 

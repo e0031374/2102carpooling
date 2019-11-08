@@ -97,4 +97,109 @@ router.get('/passengers/:bidder', (req, res) => {
     });
 });
 
+router.post('/drivers', (req, res) => {
+    //const sql_query = 'SELECT * FROM Users ORDER BY uname ASC';
+    const {advertiser, ridedate, start_time, est_trip_time, origin, destination, misc_advert} = req.body;
+    const insert_query = `INSERT INTO Advertisement(advertiser, ridedate, start_time, est_trip_time,
+        origin, destination, misc_advert)
+    VALUES ('${advertiser}', '${start_time}', '${start_time}', ${parseInt(est_trip_time)}, '${origin}', '${destination}', '${misc_advert}')`;
+
+    pool.query(insert_query, (err,data) => {
+        if (err) {
+            console.log("-------------------------------------------");
+            console.log(insert_query);
+            console.log(err);
+            throw err;
+        }
+        console.log(insert_query);
+        console.log(data);
+        res.status(200).json({success: true, msg: "inserted"});
+    });
+});
+
+router.get('/areas/all', (req, res) => {
+    const sql_query = 'SELECT * FROM Area';
+
+    pool.query(sql_query, (err,data) => {
+        if (err) {
+            console.log("-------------------------------------------");
+            console.log(sql_query);
+            console.log(err);
+            throw err;
+        }
+        console.log(data);
+        res.status(200).json({success: true, areas: data.rows});
+    });
+});
+
+router.get('/drivers/all/:uname', (req, res) => {
+    const sql_query = `SELECT * FROM Advertisement WHERE advertiser='${req.params.uname}' AND ridedate IS NOT NULL ORDER BY ridedate DESC`;
+
+    pool.query(sql_query, (err,data) => {
+        if (err) {
+            console.log("-------------------------------------------");
+            console.log(sql_query);
+            console.log(err);
+            throw err;
+        }
+        console.log(data);
+        res.status(200).json({success: true, jobs: data.rows});
+    });
+});
+
+router.get('/drivers/confirm/:uname', (req, res) => {
+    const uname = req.params.uname;
+    const sql_query = `WITH C2 AS
+    (((SELECT advertid FROM Advertisement WHERE advertiser='${uname}' AND ridedate IS NOT NULL)
+        except
+        (SELECT advertid FROM Bid WHERE drivername='${uname}' AND is_win=true))
+    )
+    SELECT * FROM Bid B INNER JOIN Advertisement A ON B.advertid=A.advertid WHERE B.advertid=ANY(SELECT advertid FROM C2) 
+    ORDER BY B.advertid DESC, B.bid_amount DESC`;
+
+    pool.query(sql_query, (err,data) => {
+        if (err) {
+            console.log("-------------------------------------------");
+            console.log(sql_query);
+            console.log(err);
+            throw err;
+        }
+        console.log(data);
+        res.status(200).json({success: true, confirmjobs: data.rows});
+    });
+});
+
+router.post('/drivers/confirm/', (req, res) => {
+    const { bidder, advertid, uname } = req.body;
+    const sql_query = `UPDATE Bid SET is_win=true WHERE bidder='${bidder}' AND advertid=${parseInt(advertid)}`;
+    const feedback_query = `WITH C2 AS
+    (((SELECT advertid FROM Advertisement WHERE advertiser='${uname}' AND ridedate IS NOT NULL)
+        except
+        (SELECT advertid FROM Bid WHERE drivername='${uname}' AND is_win=true))
+    )
+    SELECT * FROM Bid B INNER JOIN Advertisement A ON B.advertid=A.advertid WHERE B.advertid=ANY(SELECT advertid FROM C2) 
+    ORDER BY B.advertid DESC, B.bid_amount DESC`;
+
+
+    pool.query(sql_query, (err,data) => {
+        if (err) {
+            console.log("-------------------------------------------");
+            console.log(sql_query);
+            console.log(err);
+            throw err;
+        }
+        console.log(data);
+    });
+    console.log("insert success");
+    pool.query(feedback_query, (err,data) => {
+        if (err) {
+            console.log("-------------------------------------------");
+            console.log(sql_query);
+            console.log(err);
+            throw err;
+        }
+        console.log(data);
+        res.status(200).json({success: true, confirmjobs: data.rows});
+    });
+});
 module.exports = router;

@@ -26,6 +26,8 @@ export const GET_WIN_BIDS = 'GET_WIN_BIDS';
 // driver screen
 export const DRIVER_JOBS_LOADING = 'DRIVER_JOBS_LOADING';
 export const GET_DRIVER_JOBS = 'GET_DRIVER_JOBS';
+export const GET_AREAS = 'GET_AREAS';
+export const GET_CONFIRM_BID = 'GET_CONFIRM_BID';
 export const GET_CARS = 'GET_CARS';
 export const GET_INSURANCE = 'GET_INSURANCE';
 export const GET_INSURANCE_COMPANIES = 'GET_INSURANCE_COMPANIES';

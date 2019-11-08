@@ -1,5 +1,5 @@
 
-import { DRIVER_JOBS_LOADING, GET_DRIVER_JOBS,
+import { DRIVER_JOBS_LOADING, GET_DRIVER_JOBS, GET_AREAS, GET_CONFIRM_BID,
     BID_AVAILABLE_JOBS, GET_CARS, GET_INSURANCE, GET_INSURANCE_COMPANIES
 } from '../actions/types';
 const initialState = {
@@ -11,17 +11,26 @@ const initialState = {
     },
     insurance: [],
     loading: false,
+    areas: [],
+    confirmjobs: [],
 
     insuranceCompanies: [],
-    //insuranceCompanies: [ 
-    //    { cname: 'Aviva', contactnum: '1234' },
-    //    { cname: 'Virgin', contactnum: '1235' },
-    //    { cname: 'Great Eastern', contactnum: '1236' },
-    //],
 }
 
 export default function(state = initialState, action) {
     switch(action.type) {
+        case GET_AREAS:
+            return {
+                ...state,
+                areas: action.payload.areas,
+                loading: false
+            };
+        case GET_CONFIRM_BID:
+            return {
+                ...state,
+                confirmjobs: action.payload.confirmjobs,
+                loading: false
+            };
         case GET_DRIVER_JOBS:
             return {
                 ...state,

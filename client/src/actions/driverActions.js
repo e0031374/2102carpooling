@@ -1,14 +1,61 @@
 
 import axios from 'axios';
-import { GET_DRIVER_JOBS, DRIVER_JOBS_LOADING,
+import { GET_DRIVER_JOBS, DRIVER_JOBS_LOADING, GET_CONFIRM_BID, GET_AREAS,
     BID_AVAILABLE_JOBS, ADD_INSURANCE, 
     GET_CARS, GET_INSURANCE, GET_INSURANCE_COMPANIES } from '../actions/types';
+
+export const getAreas = () => dispatch => {
+    axios
+        .get(`/api/bid/areas/all`)
+        .then(res => {
+                dispatch({
+                    type: GET_AREAS,
+                    payload: res.data
+                })
+            console.log(res.data)
+        })
+};
+
+export const confirmBid = (formState) => dispatch => {
+    axios
+        .post(`/api/bid/drivers/confirm/`, formState)
+        //.get(`/api/bid/drivers/confirm/${uname}`)
+        .then(res => {
+                dispatch({
+                    type: GET_CONFIRM_BID,
+                    payload: res.data
+                })
+            console.log(res.data)
+        })
+};
+
+export const getConfirmBid = (uname) => dispatch => {
+    axios
+        //.post(`/api/accounts/`, formState)
+        .get(`/api/bid/drivers/confirm/${uname}`)
+        .then(res => {
+            //note with the GET_CONFIRM_BID, you are setting the state again
+            //with the feedback to create a closed loop
+            //so server needs tor etun somethin or local state will be overwritten
+            //causing all soerts of probelms
+                dispatch({
+                    type: GET_CONFIRM_BID,
+                    payload: res.data
+                })
+            console.log(res.data)
+        })
+        //.catch( res => 
+        //    dispatch({
+        //        type: LOGIN_ERROR,
+        //    })
+        //)
+};
 
 export const getDriverJobs = (uname) => dispatch => {
     dispatch(driverJobsLoading());
     axios
         //.post(`/api/accounts/`, formState)
-        .get(`/api/jobs/drivers/${uname}`)
+        .get(`/api/bid/drivers/all/${uname}`)
         .then(res => {
                 dispatch({
                     type: GET_DRIVER_JOBS,
@@ -46,10 +93,10 @@ export const addDriverJob = (formState) => dispatch => {
     dispatch(driverJobsLoading());
     axios
         //.post(`/api/accounts/`, formState)
-        .post(`/api/jobs/drivers/`, formState)
+        .post(`/api/bid/drivers/`, formState)
         .then(res => {
                 dispatch({
-                    type: GET_CARS,
+                    type: GET_DRIVER_JOBS,
                     payload: res.data
                 })
             console.log(res.data)

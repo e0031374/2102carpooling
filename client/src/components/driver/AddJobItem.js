@@ -8,14 +8,32 @@ import { Confirm, Grid, Icon, Form, Button, Loader } from 'semantic-ui-react';
 class AddJobItem extends React.Component {
     state = {
         modal: false,
+        advertiser: "",
         origin: "",
         destination: "",
-        startDateTime: "",
-        endDateTime: "",
-        isAd: false,
-        adFee: 0,
+        ridedate: "",
+        start_time: "",
+        est_trip_time: "",
+        misc_advert: "",
+        areas: [],
+        options: [],
 
     };
+
+    componentDidMount() {
+        //const options = optList.map(x => { key: x, text: x, value: x});
+        const {areas} = this.props.driver;
+        const advertiser = this.props.login.user;
+        console.log(areas);
+        console.log(this.props.driver);
+        const options = areas.map( x => ({ 
+            key: x.areaname, 
+            text: x.areaname, 
+            value: x.areaname,
+        }));
+        this.setState({ uname: this.props.login.user, options, areas, advertiser });
+        console.log(this.state);
+    }
 
     toggle = () => {
         this.setState({
@@ -23,10 +41,9 @@ class AddJobItem extends React.Component {
         });
     }
 
-    //name and value is from te <input/>
-    onChange = (e) => this.setState({ 
-        [e.target.name]: e.target.value
-    });
+    //name and value is from te <Form.Input/>
+    onChange = (e, {name, value}) => this.setState({ [name]: value });
+    onCheck = (e, {name, value}) => this.setState({ [name]: ! this.state[name] });
 
     advertizeMe = (e) => {
         this.setState({
@@ -38,23 +55,12 @@ class AddJobItem extends React.Component {
     //onCheck = (e, {name, value}) => this.setState({ [name]: ! this.state[name] });
     onSubmit = (evenT) => {
         evenT.preventDefault();
-        const {origin, destination, startDateTime, endDateTime, isAd, adFee} = this.state;
-        //this.props.addJob(this.state.);
-        //this.setState({ [param]: ''});
-        const newJob = {
-            origin, destination, startDateTime, endDateTime
-        }
+
+        this.setState({ ridedate: this.state.start_time });
 
         // Add job via addJob action
-        this.props.addDriverJob(newJob);
-
-        if (isAd) {
-            const ad = {
-                post: newJob,
-                fee: adFee,
-            }
-            //this.props.addAdvert();
-        }
+        console.log(this.state);
+        this.props.addDriverJob(this.state);
     }
 
     render() {
@@ -65,58 +71,51 @@ class AddJobItem extends React.Component {
             <Grid.Column>
             <Form onSubmit={this.onSubmit}>
                 <div>
-                    <Form.Input
-                        label='Start Address of Route:'
-                        type="text"
+                    <Form.Select
+                        fluid
+                        label='Start Area of Route:'
                         name="origin"
-                        placeholder="start address of route"
-                        value={this.state.origin}
+                        options={this.state.options}
                         onChange={this.onChange}
+                        placeholder="Changi"
                     />
                 </div>
                 <div>
-                    <Form.Input
-                        label='Destination'
-                        id="dest"
-                        type="text"
+                    <Form.Select
+                        fluid
+                        label='Destination Area of Route:'
                         name="destination"
-                        placeholder="start address of route"
-                        value={this.state.destination}
+                        options={this.state.options}
                         onChange={this.onChange}
+                        placeholder="Woodlands"
                     />
                 </div>
                 <div>
                     <Form.Input
-                        label="Start Date Time of Route"
+                        label="Start Date Time of Route (YYYY/MM/DD HH:mm:ss)"
                         type="text"
-                        name="startDateTime"
-                        placeholder="start time of route"
-                        value={this.state.startDateTime}
+                        name="start_time"
+                        placeholder="YYYY/MM/DD HH:mm:ss"
+                        value={this.state.start_time}
                         onChange={this.onChange}
                     />
                 </div>
                 <Form.Input
-                    label="End Date Time of Route"
-                    type="text"
-                    name="endDateTime"
+                    label="Est Time of Trip in mins"
+                    type="number"
+                    name="est_trip_time"
                     placeholder="End time of route"
-                    value={this.state.endDateTime}
+                    value={this.state.est_trip_time}
                     onChange={this.onChange}
                 />
-                <Form.Checkbox
-                    label="Advertize?"
-                    name="isAd"
-                    defaultChecked={this.state.isAd}
-                    onChange={this.advertizeMe}
+                <Form.Input
+                    label="Notes to Passengers (Optional)"
+                    type="text"
+                    name="misc_advert"
+                    placeholder="Strictly No Beluga Whales, cats and dogs are okay"
+                    value={this.state.misc_advert}
+                    onChange={this.onChange}
                 />
-                <label>Advert Fee
-                    <Form.Input 
-                        type="number" 
-                        name="adFee"
-                        value={this.state.adFee}
-                        onChange={this.onChange}
-                    />
-                </label>
                 <Form.Button
                 >Submit</Form.Button>
             </Form>
@@ -138,68 +137,10 @@ AddJobItem.propTypes = {
 
 const mapStateToProps = state => ({
     driver: state.driver,
-    job: state.jobs
+    job: state.jobs,
+    login: state.login,
 });
 
 export default connect(mapStateToProps, {addDriverJob})(AddJobItem);
 
 
-            //<form onSubmit={this.onSubmit}>
-            //    <div>
-            //    <label>Start Address of Route :
-            //        <input
-            //            type="text"
-            //            name="origin"
-            //            placeholder="start address of route"
-            //            value={this.state.origin}
-            //            onChange={this.onChange}
-            //        />
-            //    </label>
-            //    </div>
-            //    <div>
-            //        <label htmlFor="dest">Destination</label>
-            //        <input
-            //            id="dest"
-            //            type="text"
-            //            name="destination"
-            //            placeholder="start address of route"
-            //            value={this.state.destination}
-            //            onChange={this.onChange}
-            //        />
-            //    </div>
-            //    <div>
-            //        <label></label>
-            //        <input
-            //            type="text"
-            //            name="startDateTime"
-            //            placeholder="start time of route"
-            //            value={this.state.startDateTime}
-            //            onChange={this.onChange}
-            //        />
-            //    </div>
-            //    <input
-            //        type="text"
-            //        name="endDateTime"
-            //        placeholder="start time of route"
-            //        value={this.state.endDateTime}
-            //        onChange={this.onChange}
-            //    />
-            //    <label>Advertize?
-            //        <input 
-            //            type="checkbox" 
-            //            name="isAd"
-            //            defaultChecked={this.state.isAd}
-            //            onChange={this.advertizeMe}
-            //        />
-            //    </label>
-            //    <label>Advert Fee
-            //        <input 
-            //            type="number" 
-            //            name="adFee"
-            //            value={this.state.adFee}
-            //            onChange={this.onChange}
-            //        />
-            //    </label>
-            //    <button
-            //    >Submit</button>
-            //</form>

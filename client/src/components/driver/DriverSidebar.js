@@ -2,11 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import JobProfile from './JobProfile';
 import CarProfile from './subpages/CarProfile';
+import ConfirmProfile from './ConfirmProfile';
 import Insurance from './subpages/Insurance';
 import { Menu, Grid, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { getJobs, deleteJob } from '../../actions/jobActions';
-import { getInsuranceCompanies } from '../../actions/driverActions';
+import { getInsuranceCompanies, getAreas, getConfirmBid } from '../../actions/driverActions';
 
 class DriverSidebar extends React.Component {
     state = { activeItem: 'jobprofile' }
@@ -15,12 +16,17 @@ class DriverSidebar extends React.Component {
 
     componentDidMount() {
         this.props.getInsuranceCompanies();
+        this.props.getConfirmBid(this.props.login.user);
+        this.props.getAreas();
+        //this.props.getJobs(this.props.login.user);
+        //this.props.getConfirmBid(this.props.login.user);
     }
 
     render() {
         const { activeItem } = this.state;
         const renderItem = activeItem === 'jobprofile'
             ? <JobProfile/>
+            : activeItem === 'confirmprofile' ? <ConfirmProfile/>
             : activeItem === 'carprofile' ? <CarProfile/>
             : activeItem === 'insurance' ? <Insurance/>
             : <JobProfile/>;
@@ -34,6 +40,11 @@ class DriverSidebar extends React.Component {
                     <Menu.Item
                         name='jobprofile'
                         active={activeItem === 'jobprofile'}
+                        onClick={this.handleItemClick}
+                    />
+                    <Menu.Item
+                        name='confirmprofile'
+                        active={activeItem === 'confirmprofile'}
                         onClick={this.handleItemClick}
                     />
                     <Menu.Item
@@ -65,19 +76,6 @@ class DriverSidebar extends React.Component {
 const container = {
 }
 
-//const DriverSidebar = (props) => {
-//    return (
-//        <div> 
-//            <h3>Driver Stuff</h3>
-//            <ul>
-//                <li><Link to="/driver/jobprofile">Job Profile</Link></li>
-//                <li><Link to="/driver/carprofile">Car Profile</Link></li>
-//                <li><Link to="/driver/insurance">Buy Insurance</Link></li>
-//            </ul>
-//        </div>
-//    );
-//}
-
 
 const mapStateToProps = (state) => ({
     login: state.login,
@@ -86,7 +84,7 @@ const mapStateToProps = (state) => ({
 
 export default connect(
     mapStateToProps, 
-    {getJobs, deleteJob, getInsuranceCompanies }
+    {getJobs, deleteJob, getInsuranceCompanies, getAreas, getConfirmBid }
 )(DriverSidebar);
 //export default DriverSidebar;
 

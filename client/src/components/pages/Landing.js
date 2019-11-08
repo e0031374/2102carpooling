@@ -12,6 +12,7 @@ import History from './History';
 import styles from '../../static/css/Home.module.css';
 import { connect } from 'react-redux';
 import { getMembers } from '../../actions/memberActions';
+import { getInsuranceCompanies, getAreas, getConfirmBid, getDriverJobs, } from '../../actions/driverActions';
 import { getBalance } from '../../actions/ewalletActions';
 import { Redirect } from  'react-router-dom';
 
@@ -21,7 +22,10 @@ class Landing extends React.Component {
 
     componentDidMount() {
         this.props.getMembers();
+        this.props.getAreas();
+        this.props.getDriverJobs(this.props.login.user);
         this.props.getBalance(this.props.login.user);
+        this.props.getConfirmBid(this.props.login.user);
         console.log(this.props.ewallet);
         console.log(this.props.login);
     }
@@ -102,5 +106,5 @@ const mapStateToProps = state => ( {
 
 export default connect(
     mapStateToProps,
-    {getMembers, getBalance}
+    {getMembers, getBalance, getAreas, getConfirmBid, getDriverJobs}
 )(Landing);
