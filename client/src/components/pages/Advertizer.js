@@ -4,6 +4,7 @@ import Header from '../layout/Header';
 import { connect } from 'react-redux';
 import { getSettings } from '../../actions/loginActions';
 import { Redirect } from 'react-router-dom';
+import AddAdItem from '../advertizer/AddAdItem';
 import PropTypes from 'prop-types';
 import Settings from './Settings';
 
@@ -13,6 +14,7 @@ const Advertizer = (props) => {
         return (
             <div>
                 <h1>Advertizer Screen</h1>
+                <AddAdItem/>
             </div>
         );
     } else {

@@ -4,10 +4,9 @@ import { GET_ADS, ADS_LOADING,
     } from '../actions/types';
 
 export const getAds = () => dispatch => {
-    dispatch(passengerJobsLoading());
     axios
         //.post(`/api/accounts/`, formState)
-        .get(`/api/jobs/ads`)
+        .get(`/api/ads`)
         .then(res => {
                 dispatch({
                     type: GET_ADS,
@@ -15,11 +14,20 @@ export const getAds = () => dispatch => {
                 })
             console.log(res.data)
         })
-        //.catch( res => 
-        //    dispatch({
-        //        type: LOGIN_ERROR,
-        //    })
-        //)
+};
+
+export const postAd = (formState) => dispatch => {
+    console.log(formState);
+    axios
+        .post(`/api/ads/`, formState)
+        //.get(`/api/ads`)
+        .then(res => {
+                dispatch({
+                    type: GET_ADS,
+                    payload: res.data
+                })
+            console.log(res.data)
+        })
 };
 
 export const adsLoading = () => {

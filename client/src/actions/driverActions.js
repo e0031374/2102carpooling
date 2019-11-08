@@ -94,13 +94,13 @@ export const addDriverJob = (formState) => dispatch => {
     axios
         //.post(`/api/accounts/`, formState)
         .post(`/api/bid/drivers/`, formState)
-        .then(res => {
-                dispatch({
-                    type: GET_DRIVER_JOBS,
-                    payload: res.data
-                })
-            console.log(res.data)
-        })
+        //.then(res => {
+        //        dispatch({
+        //            type: GET_DRIVER_JOBS,
+        //            payload: res.data
+        //        })
+        //    console.log(res.data)
+        //})
 };
 
 export const getCars = (uname) => dispatch => {
