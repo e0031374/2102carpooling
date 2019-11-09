@@ -1,0 +1,138 @@
+//// the route is still accounts even though backend is users
+
+http://localhost:5000/api/accounts
+get: get list of all accounts
+post: create a new account 
+    NOTE: adds password to history, and adds ccnum to ewallet
+status: working
+
+http://localhost:5000/api/accounts/root/password
+get: check if username and passwords match
+status: works
+
+http://localhost:5000/api/accounts/root
+delete: delete an account
+
+http://localhost:5000/api/accounts/forgot/root/password
+get: check if a password was previously used in password
+    history
+
+/** SETTINGS **/
+
+http://localhost:5000/api/settings/drivers
+post: add into driver account
+status: works
+caveat: doesnt redirect
+
+http://localhost:5000/api/settings/advertizers
+post: add into advertiser account
+status: works
+caveat: doesnt redirect
+
+http://localhost:5000/api/settings/root
+get: check if isdriver/isadvertizer
+status: works
+
+http://localhost:5000/api/settings/resetpass
+post: given old pass give current pass
+status: works
+
+http://localhost:5000/api/settings/changepass
+post: change password to new password
+status: works
+
+http://localhost:5000/api/members
+post: adds feedback
+status: works
+caveat: rating probably shouldnt be unique
+
+(uname, anyoldpass) -> (success T/F ,currentPass stored in User)
+
+http://localhost:5000/api/drivers/car/root
+get: gets that car
+status works
+
+http://localhost:5000/api/drivers/car/
+post: gets that car
+status:  works
+
+
+http://localhost:5000/api/drivers/insurance
+get: get all insurance companies
+status: works
+post: insert insurance policy
+status:works
+
+http://localhost:5000/api/drivers/insurance/root
+get: gets that one insurance
+status works
+
+http://localhost:5000/api/jobs/passengers
+get: gets all advertizers
+status works
+caveat: i need to get the ewallet working first to 
+
+http://localhost:5000/api/ewallet/root
+get: gets a users balance
+status: works
+
+http://localhost:5000/api/ewallet/
+post: insert a new balance
+status: works
+
+http://localhost:5000/api/bid/passengers
+post: submit a bid
+status: works
+
+http://localhost:5000/api/bid/passengers/root
+get: get all winning bids
+status: works
+
+http://localhost:5000/api/bid/drivers
+post: submit a bid
+status: works
+
+http://localhost:5000/api/bid/drivers/all/root
+get: get all bids 
+status: 
+
+http://localhost:5000/api/bid/drivers/confirm/root
+get: get all unwonbids
+status: working
+
+WITH C2 AS
+(((SELECT advertid FROM Advertisement WHERE advertiser='haein' AND ridedate IS NOT NULL)
+except
+(SELECT advertid FROM Bid WHERE drivername='haein' AND is_win=true))
+)
+SELECT * FROM Bid B INNER JOIN Advertisement A ON B.advertid=A.advertid WHERE B.advertid=ANY(SELECT advertid FROM C2) ORDER BY B.advertid DESC, B.bid_amount DESC;
+
+http://localhost:5000/api/bid/drivers/confirm/
+post: select a winning bid, given bidder and advertid
+status:works
+
+http://localhost:5000/api/bid/areas/all
+get: get all areas
+status: works
+
+
+http://localhost:5000/api/ads
+get: get all third party ads
+post: submit a thirdparty ad
+status: works
+
+http://localhost:5000/api/ads/feature1
+get: get all 
+status: works
+
+http://localhost:5000/api/ads/feature2
+get: get all 
+status: works
+
+http://localhost:5000/api/ads/feature3
+get: get all 
+status: works
+
+http://localhost:5000/api/ads/topdriver
+get: get
+status: works
