@@ -1,25 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import AdsProfile from './AdsProfile';
+import TopProfile from './TopProfile';
 import { Menu, Grid, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { getAds } from '../../actions/adActions';
+import { getAds, getTops } from '../../actions/adActions';
 
 class HomeSidebar extends React.Component {
-    state = { activeItem: 'adsprofile' }
+    state = { activeItem: 'Sponsored Ads' }
 
     handleItemClick = (e, { name }) => this.setState({ activeItem: name });
 
     componentDidMount() {
         this.props.getAds();
+        this.props.getTops();
     }
 
     render() {
         const { activeItem } = this.state;
-        const renderItem = activeItem === 'adsprofile'
+        const renderItem = activeItem === 'Sponsored Ads'
             ? <AdsProfile/>
 //            : activeItem === 'confirmprofile' ? <ConfirmProfile/>
-//            : activeItem === 'carprofile' ? <CarProfile/>
+            : activeItem === 'Hall Of Fame' ? <TopProfile/>
 //            : activeItem === 'insurance' ? <Insurance/>
             : <AdsProfile/>;
 
@@ -30,8 +32,13 @@ class HomeSidebar extends React.Component {
                 <Grid.Column width={4}>
                 <Menu pointing seconday vertical>
                     <Menu.Item
-                        name='adsprofile'
-                        active={activeItem === 'adsprofile'}
+                        name='Sponsored Ads'
+                        active={activeItem === 'Sponsored Ads'}
+                        onClick={this.handleItemClick}
+                    />
+                    <Menu.Item
+                        name='Hall Of Fame'
+                        active={activeItem === 'Hall Of Fame'}
                         onClick={this.handleItemClick}
                     />
                 </Menu>
@@ -56,11 +63,6 @@ class HomeSidebar extends React.Component {
                     //    onClick={this.handleItemClick}
                     ///>
                     //<Menu.Item
-                    //    name='carprofile'
-                    //    active={activeItem === 'carprofile'}
-                    //    onClick={this.handleItemClick}
-                    ///>
-                    //<Menu.Item
                     //    name='insurance'
                     //    active={activeItem === 'insurace'}
                     //    onClick={this.handleItemClick}
@@ -73,7 +75,7 @@ const mapStateToProps = (state) => ({
 
 export default connect(
     mapStateToProps, 
-    {getAds}
+    {getAds, getTops}
 )(HomeSidebar);
 //export default HomeSidebar;
 

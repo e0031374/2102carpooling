@@ -39,7 +39,7 @@ class Landing extends React.Component {
             : activeItem === 'settings' ? <Settings/>
             : activeItem === 'member' ? <Member/>
             : activeItem === 'ewallet' ? <Ewallet/>
-            : activeItem === 'history' ? <History/>
+//            : activeItem === 'history' ? <History/>
             : <Home/>;
 
 	    if (this.props.login.user === "") return <Redirect to='/' />
@@ -84,11 +84,6 @@ class Landing extends React.Component {
                         active={activeItem === 'ewallet'}
                         onClick={this.handleItemClick}
                     />
-                    <Menu.Item
-                        name='history'
-                        active={activeItem === 'history'}
-                        onClick={this.handleItemClick}
-                    />
                 </Menu>
                 <Segment attached='bottom'>
                     {renderItem}
@@ -98,6 +93,11 @@ class Landing extends React.Component {
     }
 }
 
+                    //<Menu.Item
+                    //    name='history'
+                    //    active={activeItem === 'history'}
+                    //    onClick={this.handleItemClick}
+                    ///>
 
 const mapStateToProps = state => ( {
     login: state.login,

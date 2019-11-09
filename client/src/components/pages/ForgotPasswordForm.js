@@ -40,7 +40,7 @@ class ForgotPasswordForm extends React.Component {
         //}
         this.props.getSettings(user);
         console.log("sleeep");
-        await this.sleep(200);
+        await this.sleep(500);
         console.log("sleeep");
         this.setState({ ...this.state });
         const { retPass } = this.props.login;

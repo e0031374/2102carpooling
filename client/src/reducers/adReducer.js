@@ -1,12 +1,14 @@
 
 //state is obj
 import { GET_ADS, GET_FEATURE_ONE, GET_FEATURE_TWO, GET_FEATURE_THREE, 
+    GET_TOP_DRIVERS
 } from '../actions/types';
 const initialState = {
     ads: [],
     feature1: [],
     feature2: [],
     feature3: [],
+    topdrivers: [],
 }
 
 export default function(state = initialState, action) {
@@ -33,6 +35,12 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 ads: action.payload.ads,
+                loading: false
+            };
+        case GET_TOP_DRIVERS:
+            return {
+                ...state,
+                topdrivers: action.payload.topdrivers,
                 loading: false
             };
             

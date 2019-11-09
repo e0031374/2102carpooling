@@ -7,7 +7,7 @@ import Insurance from './subpages/Insurance';
 import { Menu, Grid, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { getJobs, deleteJob } from '../../actions/jobActions';
-import { getInsuranceCompanies, getAreas, getConfirmBid } from '../../actions/driverActions';
+import { getInsuranceCompanies, getAreas, getConfirmBid, getCars } from '../../actions/driverActions';
 
 class DriverSidebar extends React.Component {
     state = { activeItem: 'jobprofile' }
@@ -18,6 +18,7 @@ class DriverSidebar extends React.Component {
         this.props.getInsuranceCompanies();
         this.props.getConfirmBid(this.props.login.user);
         this.props.getAreas();
+        this.props.getCars(this.props.login.user);
         //this.props.getJobs(this.props.login.user);
         //this.props.getConfirmBid(this.props.login.user);
     }
@@ -84,7 +85,7 @@ const mapStateToProps = (state) => ({
 
 export default connect(
     mapStateToProps, 
-    {getJobs, deleteJob, getInsuranceCompanies, getAreas, getConfirmBid }
+    {getJobs, deleteJob, getCars, getInsuranceCompanies, getAreas, getConfirmBid }
 )(DriverSidebar);
 //export default DriverSidebar;
 

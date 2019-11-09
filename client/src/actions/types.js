@@ -36,6 +36,7 @@ export const ADD_INSURANCE = 'ADD_INSURANCE';
 // ads screen
 export const ADS_LOADING = 'ADS_LOADING';
 export const GET_ADS = 'GET_ADS';
+export const GET_TOP_DRIVERS = 'GET_TOP_DRIVERS';
 export const GET_FEATURE_ONE = 'GET_FEATURE_ONE';
 export const GET_FEATURE_TWO = 'GET_FEATURE_TWO';
 export const GET_FEATURE_THREE = 'GET_FEATURE_THREE';

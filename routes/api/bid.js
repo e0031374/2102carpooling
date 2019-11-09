@@ -154,7 +154,7 @@ router.get('/drivers/confirm/:uname', (req, res) => {
         except
         (SELECT advertid FROM Bid WHERE drivername='${uname}' AND is_win=true))
     )
-    SELECT * FROM Bid B INNER JOIN Advertisement A ON B.advertid=A.advertid WHERE B.advertid=ANY(SELECT advertid FROM C2) 
+    SELECT * FROM Bid B INNER JOIN Advertisement A ON B.advertid=A.advertid WHERE B.advertid=ANY(SELECT advertid FROM C2) AND ridedate IS NOT NULL 
     ORDER BY B.advertid DESC, B.bid_amount DESC`;
 
     pool.query(sql_query, (err,data) => {
@@ -177,8 +177,9 @@ router.post('/drivers/confirm/', (req, res) => {
         except
         (SELECT advertid FROM Bid WHERE drivername='${uname}' AND is_win=true))
     )
-    SELECT * FROM Bid B INNER JOIN Advertisement A ON B.advertid=A.advertid WHERE B.advertid=ANY(SELECT advertid FROM C2) 
+    SELECT * FROM Bid B INNER JOIN Advertisement A ON B.advertid=A.advertid WHERE B.advertid=ANY(SELECT advertid FROM C2) AND ridedate IS NOT NULL 
     ORDER BY B.advertid DESC, B.bid_amount DESC`;
+    const bid_query = `SELECT * FROM Bid WHERE advertid='${advertid}' AND bidder='${bidder}'`;
 
 
     pool.query(sql_query, (err,data) => {
@@ -199,6 +200,27 @@ router.post('/drivers/confirm/', (req, res) => {
             }
             console.log(data);
             res.status(200).json({success: true, confirmjobs: data.rows});
+        });
+        pool.query(bid_query, (err,data) => {
+            if (err) {
+                console.log("-------------------------------------------");
+                console.log(bid_query);
+                console.log(err);
+                throw err;
+            }
+            console.log("query success");
+            console.log(data.rows[0]);
+            const { bid_amount } = data.rows[0];
+            const historyinsert_query = `INSERT INTO History VALUES ('${bidder}', '${advertid}', '${bid_amount}')`;
+            pool.query(historyinsert_query, (err,data) => {
+                if (err) {
+                    console.log("-------------------------------------------");
+                    console.log(sql_query);
+                    console.log(err);
+                    throw err;
+                }
+                console.log("history insert success");
+            });
         });
     });
 });

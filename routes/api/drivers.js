@@ -6,6 +6,37 @@ const bodyParser = require('body-parser');
 
 // using Member Model
 //const Account = require('../../models/Account');
+//
+router.get('/car/:uname', (req, res) => {
+    const sql_query = `SELECT * FROM Car WHERE carowner='${req.params.uname}'`;
+    pool.query(sql_query, (err,data) => {
+        if (err) {
+            console.log(sql_query);
+            console.log(err);
+            throw err;
+        }
+        console.log(data.rows);
+        console.log("-------------------------------------------");
+        res.status(200).json({success: true, car: data.rows});
+    });
+});
+
+router.post('/car', (req, res) => {
+    const { uname, platenum, brand, model, colour, seatnum } = req.body;
+    const sql_query = `INSERT INTO Car(platenum, carowner, brand, model, colour, 
+        seatnum) VALUES('${platenum}', '${uname}' ,'${brand}', '${model}', 
+        '${colour}', '${seatnum}')`;
+    pool.query(sql_query, (err,data) => {
+        if (err) {
+            console.log("-------------------------------------------");
+            console.log(sql_query);
+            console.log(err);
+            throw err;
+        }
+        console.log(data);
+        res.status(200).json({success: true, msg: "inserted"});
+    });
+});
 
 // @router GET api/drivers/insurance
 // @desc Get All insurance companies

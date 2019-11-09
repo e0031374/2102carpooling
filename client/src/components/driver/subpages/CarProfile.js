@@ -2,6 +2,7 @@ import React from 'react';
 
 import DriverSidebar from '../DriverSidebar'
 import Header from '../../layout/Header';
+import {getCar} from '../../../actions/driverActions';
 import CarItem from './CarItem';
 import AddCarForm from './AddCarForm';
 import { connect } from 'react-redux';
@@ -20,13 +21,15 @@ class CarProfile extends React.Component {
     componentDidMount() {
         const uname = this.props.login.user;
         // TODO call the fetch car query
+        this.props.getCar(uname);
         const { car } = this.props.driver;
         this.setState({ hasCar: true, car });
     }
 
     render() {
-        const renderItem = this.state.hasCar
-            ? <CarItem car={this.state.car}/>
+        console.log(this.props.driver);
+        const renderItem = this.props.driver.car.length > 0
+            ? <CarItem car={this.props.driver.car[0]}/>
             : <Card>
                 <Card.Content>
                     <Card.Header>No Car Found in Records</Card.Header>
@@ -51,4 +54,6 @@ const mapStateToProps = state => ({
     login: state.login,
 });
 
-export default connect(mapStateToProps, {})(CarProfile);
+export default connect(mapStateToProps, {
+    getCar,
+})(CarProfile);

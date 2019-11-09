@@ -44,6 +44,11 @@ class RideAds extends React.Component {
             this.handleClose();
             return;
         }
+        if (this.state.balance <= 0) {
+            console.log("error bid 0 dollars or less");
+            console.log(this.state);
+            return;
+        }
         this.props.submitBid(this.state);
         this.handleClose();
     }

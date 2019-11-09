@@ -16,6 +16,17 @@ router.get("/", (req, res) => {
     });
 })
 
+router.get("/topdrivers", (req, res) => {
+    const sql_query = 'SELECT * FROM Recommendeddriver ORDER BY avg_rating DESC;'
+    pool.query(sql_query, (err,data) => {
+        if (err) {
+            throw err;
+        }
+        console.log(data.rows);
+        res.status(200).json({ success: true, topdrivers: data.rows});
+    });
+})
+
 router.post("/", (req, res) => {
     const { advertiser, misc_advert } = req.body;
     const sql_query = `INSERT INTO Advertisement(advertiser, ridedate, start_time, est_trip_time, origin, destination, misc_advert) VALUES('${advertiser}', null, null, null, null, null, '${misc_advert}')`;

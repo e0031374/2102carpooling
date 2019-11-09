@@ -14,11 +14,11 @@ class CarPanel extends React.Component {
 
     render() {
         console.log(this.props.driver.jobs);
-        const { jobs } = this.props.driver;
-        return jobs.map(job => ( 
+        const { car } = this.props.driver;
+        return car.map(job => ( 
             <CarItem 
             key={job.startDateTime}
-            job={job} 
+            car={job} 
             delJob={this.props.delJob}
             />
         )); //<CarItem />;

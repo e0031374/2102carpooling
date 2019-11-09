@@ -16,6 +16,32 @@ export const getAreas = () => dispatch => {
         })
 };
 
+export const getCar = (uname) => dispatch => {
+    axios
+        .get(`/api/drivers/car/${uname}`)
+        .then(res => {
+                dispatch({
+                    type: GET_CARS,
+                    payload: res.data
+                })
+            console.log(res.data)
+        })
+};
+
+export const addCar = (formState) => dispatch => {
+    axios
+        .post(`/api/drivers/car`, formState)
+        //.then( dispatch(getCar()) )
+        //.get(`/api/bid/drivers/confirm/${uname}`)
+        //.then(res => {
+        //        dispatch({
+        //            type: GET_CONFIRM_BID,
+        //            payload: res.data
+        //        })
+        //    console.log(res.data)
+        //})
+};
+
 export const confirmBid = (formState) => dispatch => {
     axios
         .post(`/api/bid/drivers/confirm/`, formState)
@@ -106,7 +132,7 @@ export const addDriverJob = (formState) => dispatch => {
 export const getCars = (uname) => dispatch => {
     axios
         //.post(`/api/accounts/`, formState)
-        .get(`/api/jobs/drivers/cars/${uname}`)
+        .get(`/api/drivers/car/${uname}`)
         .then(res => {
                 dispatch({
                     type: GET_CARS,
@@ -116,18 +142,6 @@ export const getCars = (uname) => dispatch => {
         })
 };
 
-export const addCars = (formState) => dispatch => {
-    axios
-        //.post(`/api/accounts/`, formState)
-        .post(`/api/jobs/drivers/cars/`, formState)
-        .then(res => {
-                dispatch({
-                    type: GET_CARS,
-                    payload: res.data
-                })
-            console.log(res.data)
-        })
-};
 
 export const getInsuranceCompanies = () => dispatch => {
     //dispatch(driverJobsLoading());

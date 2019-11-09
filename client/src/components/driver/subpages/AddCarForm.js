@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
-//import { addCar } from '../../actions/driverActions';
+import { addCar } from '../../../actions/driverActions';
 import { Form, Button, Confirm } from 'semantic-ui-react';
 
 //TODO add car and also if driver already has a car override
 class AddCarForm extends React.Component {
     state = {
+        uname: "",
         platenum: "",
         brand: "",
         model: "",
@@ -19,12 +20,17 @@ class AddCarForm extends React.Component {
     onChange = (e, {name, value}) => this.setState({ [name]: value });
     onCheck = (e, {name, value}) => this.setState({ [name]: ! this.state[name] });
 
+    componentDidMount() {
+        const uname = this.props.login.user;
+        this.setState({ uname });
+    }
+
     onSubmit = (e) => {
         e.preventDefault();
         console.log(this.state);
 
         // Add car via addCar action
-        //this.props.addCar(newCar);
+        this.props.addCar(this.state);
     }
 
     render() {
@@ -79,7 +85,8 @@ AddCarForm.propTypes = {
 }
 
 const mapStateToProps = state => ({
-    driver: state.driver
+    driver: state.driver,
+    login: state.login
 });
 
-export default connect(mapStateToProps, {})(AddCarForm);
+export default connect(mapStateToProps, {addCar})(AddCarForm);

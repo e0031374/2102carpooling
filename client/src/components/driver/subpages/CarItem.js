@@ -4,15 +4,16 @@ import { Card } from 'semantic-ui-react';
 
 class CarItem extends React.Component {
     render() {
+        const { brand, model, platenum, colour, seatnum } = this.props.car;
         return (
             <Card>
                 <Card.Content>
-                    <Card.Header>{this.props.car.brand}</Card.Header>
+                    <Card.Header>{`${brand} ${model}`}</Card.Header>
                     <Card.Meta>
-                        {this.props.car.type}
+                        {`Platenum: ${platenum}`}
                     </Card.Meta>
                     <Card.Description>
-                        {this.props.car.seat}
+                        {`Color: ${colour}, Seats: ${seatnum}`}
                     </Card.Description>
                 </Card.Content>
             </Card>

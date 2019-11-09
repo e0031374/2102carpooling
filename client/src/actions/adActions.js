@@ -1,9 +1,21 @@
 
 import axios from 'axios';
 import { GET_ADS, ADS_LOADING, GET_FEATURE_ONE, GET_FEATURE_TWO, 
-    GET_FEATURE_THREE,
+    GET_FEATURE_THREE, GET_TOP_DRIVERS,
     } from '../actions/types';
 
+export const getTops = () => dispatch => {
+    axios
+        //.post(`/api/accounts/`, formState)
+        .get(`/api/ads/topdrivers`)
+        .then(res => {
+                dispatch({
+                    type: GET_TOP_DRIVERS,
+                    payload: res.data
+                })
+            console.log(res.data)
+        })
+};
 export const getFeatureOne = () => dispatch => {
     axios
         //.post(`/api/accounts/`, formState)

@@ -4,11 +4,12 @@ import { DRIVER_JOBS_LOADING, GET_DRIVER_JOBS, GET_AREAS, GET_CONFIRM_BID,
 } from '../actions/types';
 const initialState = {
     jobs: [],
-    car : {
-        brand: "Honda",
-        type: "Civic",
-        seat: 4,
-    },
+    car: {},
+    //car : {
+    //    brand: "Honda",
+    //    type: "Civic",
+    //    seat: 4,
+    //},
     insurance: [],
     loading: false,
     areas: [],
@@ -45,7 +46,7 @@ export default function(state = initialState, action) {
         case GET_CARS:
             return {
                 ...state,
-                cars: action.payload.cars,
+                car: action.payload.car,
                 loading: false
             };
         case GET_INSURANCE:
