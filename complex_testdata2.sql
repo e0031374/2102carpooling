@@ -413,7 +413,44 @@ INSERT INTO RecommendedDriver VALUES ('keanelooi', '7.9');
 INSERT INTO RecommendedDriver VALUES ('royston', '5.8');
 INSERT INTO RecommendedDriver VALUES ('haein', '10.0');
 
+INSERT INTO InsuranceCompany VALUES('Aviva', '1234');
+INSERT INTO InsuranceCompany VALUES('Great Eastern', '2234');
+INSERT INTO InsuranceCompany VALUES(
+'NTUC', '3234');
+INSERT INTO InsuranceCompany VALUES('DBS', '4234');
+INSERT INTO InsuranceCompany VALUES('BOC', '5678');
 
+
+INSERT INTO Insurance(insuranceowner, policynum, insuranceprovider) VALUES('haein','bbb1111','Aviva');
+INSERT INTO Insurance(insuranceowner, policynum, insuranceprovider) VALUES('royston','cccc2222','NTUC');
+INSERT INTO Insurance(insuranceowner, policynum, insuranceprovider) VALUES('keanelooi','ddddd3333','Great Eastern');
+
+UPDATE Driver SET policynum='bbb1111' WHERE drivername='haein' AND licensenum='00000000A';
+UPDATE Driver SET policynum='cccc2222' WHERE drivername='royston' AND licensenum='1111111B';
+UPDATE Driver SET policynum='cccc2222' WHERE drivername='keanelooi' AND licensenum='22222222C';
+
+INSERT INTO Car(platenum, carowner, brand, model, colour, seatnum) VALUES('aaa1111','haein','Toyota', 'Model S', 'yellow', '5');
+INSERT INTO Car(platenum, carowner, brand, model, colour, seatnum) VALUES('eeee3333','royston','BMW', 'Civic', 'green', '7');
+INSERT INTO Car(platenum, carowner, brand, model, colour, seatnum) VALUES('ffff4444','keanelooi','Honda', 'Beetle', 'purple', '2');
+
+INSERT INTO Drives(uname, platenum) VALUES ('haein', 'aaa1111');
+INSERT INTO Drives(uname, platenum) VALUES ('royston', 'eeee3333');
+INSERT INTO Drives(uname, platenum) VALUES ('keanelooi', 'ffff4444');
+
+INSERT INTO PasswordHistory(uname, oldpass) VALUES ('keanelooi', 'yixian45');
+INSERT INTO PasswordHistory(uname, oldpass) VALUES ('hongwei', 'limcoder89');
+INSERT INTO PasswordHistory(uname, oldpass) VALUES ('cheeyang', 'tehholy0ne');
+INSERT INTO PasswordHistory(uname, oldpass) VALUES ('yangyang', 'kingsavatar');
+INSERT INTO PasswordHistory(uname, oldpass) VALUES ('haein', 'jungmaste');
+INSERT INTO PasswordHistory(uname, oldpass) VALUES ('royston', 'bridge4life');
+INSERT INTO PasswordHistory(uname, oldpass) VALUES ('nokia', 'bestbrick');
+INSERT INTO PasswordHistory(uname, oldpass) VALUES ('keanelooi', 'password');
+INSERT INTO PasswordHistory(uname, oldpass) VALUES ('hongwei', 'password');
+INSERT INTO PasswordHistory(uname, oldpass) VALUES ('cheeyang', 'password');
+INSERT INTO PasswordHistory(uname, oldpass) VALUES ('yangyang', 'password');
+INSERT INTO PasswordHistory(uname, oldpass) VALUES ('haein', 'password');
+INSERT INTO PasswordHistory(uname, oldpass) VALUES ('royston', 'root');
+INSERT INTO PasswordHistory(uname, oldpass) VALUES ('nokia', 'root');
 
 -- Feature 1
 SELECT A.uname, COUNT(*) AS num_posted

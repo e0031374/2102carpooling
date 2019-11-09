@@ -67,9 +67,9 @@ class AddCarForm extends React.Component {
                 <Form.Input
                     label="How Many Seats for Passengers"
                     type="number"
-                    name="seats"
+                    name="seatnum"
                     placeholder="4"
-                    value={this.state.seats}
+                    value={this.state.seatnum}
                     onChange={this.onChange}
                 />
                 <Form.Button
