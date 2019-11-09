@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 
 const MemberItems = (props) => {
     const memberList = props
-        .members.map(member => <MemberItem key={member.uname} member={member}/>);
+        .members.map(member => <MemberItem key={member.drivername} member={member}/>);
     return (
         <Item.Group>
             {memberList}
@@ -15,8 +15,8 @@ const MemberItems = (props) => {
 const MemberItem = (props) => (
     <Item>
         <Item.Content>
-            <Item.Header as='a'>{props.member.uname}</Item.Header>
-            <Item.Meta></Item.Meta>
+            <Item.Header as='a'>{props.member.drivername}</Item.Header>
+            <Item.Meta>Rating: {props.member.avg_rating}</Item.Meta>
             <Item.Description>
             </Item.Description>
         </Item.Content>

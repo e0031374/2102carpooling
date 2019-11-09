@@ -1,9 +1,10 @@
 import React from 'react';
 import Empty from '../member/Empty';
-import MemberItems from '../member/MemberItems';
-import MemberCard from '../member/MemberCard';
+import SearchDriverItems from './SearchDriverItems';
+import SearchDriverCard from './SearchDriverCard';
 import { Search, Grid, Header, Segment, Label } from 'semantic-ui-react';
-import { getMembers } from '../../actions/memberActions';
+import { getSearchDrivers } from '../../actions/memberActions';
+import { getFeatureTwo } from '../../actions/adActions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
@@ -16,21 +17,23 @@ const initialState = {
     // overwritten with initialState and we will lose source
 }
 
-const resultRenderer = ({ uname }) => <Label content={uname} />;
+const resultRenderer = ({ drivername}) => <Label content={drivername} />;
 
-class Member extends React.Component {
+class SearchDriver extends React.Component {
 
     componentDidMount() {
-        // getting Members here doesnt work for some reason i have 
+        // getting SearchDrivers here doesnt work for some reason i have 
         // placed them in the landing.js
         // this is a hack around it but F!@K
-        //this.props.getMembers();
-        const members = this.props.member.members;
+        //this.props.getSearchDrivers();
+        const members = this.props.ads.feature2;
         console.log(members);
-        const source = members.map((member) => ({
-            uname: member.uname,
-            //description: member.bios,
-            //rating: member.rating,
+        console.log(this.props.ads);
+        //const source = members;
+        const source = members.map(( { drivername, total_rides, avg_rating} ) => ({
+            drivername,
+            total_rides,
+            avg_rating: avg_rating.substring(0,4),
         }));
         this.setState({ source });
         console.log(this.state);
@@ -39,7 +42,7 @@ class Member extends React.Component {
     state = initialState;
 
     handleResultSelect = (e, {result}) => { 
-        this.setState({ value:result.uname, select: true });
+        this.setState({ value:result.drivername, select: true });
     }
 
     handleSearchChange = (e, {value}) => {
@@ -55,7 +58,7 @@ class Member extends React.Component {
 
             //const re = new RegExp(_.escapeRegExp(this.state.value), 'i');
             const re = new RegExp(escapeRegExp(this.state.value), 'i');
-            const isMatch = (result) => re.test(result.uname);
+            const isMatch = (result) => re.test(result.drivername);
 
             this.setState({
                 isLoading: false,
@@ -68,13 +71,13 @@ class Member extends React.Component {
     render() {
         const { isLoading, value, results } = this.state;
         const selected = this.state.results.find(obj => {
-            return obj.uname == value;
+            return obj.drivername == value;
         })
         const displayResult = this.state.select
-            ? <MemberCard member={selected}/>
+            ? <SearchDriverCard member={selected}/>
             : this.state.results.length < 1
                 ? <Empty/>
-                : <MemberItems members={results}/>;
+                : <SearchDriverItems members={results}/>;
 
 
         return (
@@ -116,17 +119,6 @@ const resultContainer = {
     justifyContent: "center",
     margin: "20px",
 }
-                //<Grid.Column width={6}>
-                //<Grid.Column width={10}>
-                        //<Header>State</Header>
-                        //<pre style={{ overflowX: 'auto' }}>
-                        //    {JSON.stringify(this.state, null, 2)}
-                        //</pre>
-                        //<Header>Options</Header>
-                        //<pre style={{ overflowX: 'auto' }}>
-                        //    {JSON.stringify(this.state, null, 2)}
-                        //</pre>
-
 //https://github.com/lodash/lodash/blob/master/escapeRegExp.js
 /**
  * Used to match `RegExp`
@@ -154,62 +146,20 @@ function escapeRegExp(string) {
     ? string.replace(reRegExpChar, '\\$&')
     : (string || '')
 }
-
-//export default escapeRegExp
-
-/** Used as references for various `Number` constants. */
-const MAX_SAFE_INTEGER = 9007199254740991
-
-/** Used as references for the maximum length and index of an array. */
-const MAX_ARRAY_LENGTH = 4294967295
-
-/**
- * Invokes the iteratee `n` times, returning an array of the results of
- * each invocation. The iteratee is invoked with one argument: (index).
- *
- * @since 0.1.0
- * @category Util
- * @param {number} n The number of times to invoke `iteratee`.
- * @param {Function} iteratee The function invoked per iteration.
- * @returns {Array} Returns the array of results.
- * @example
- *
- * times(3, String)
- * // => ['0', '1', '2']
- *
- *  times(4, () => 0)
- * // => [0, 0, 0, 0]
- */
-function times(n, iteratee) {
-  if (n < 1 || n > MAX_SAFE_INTEGER) {
-    return []
-  }
-  let index = -1
-  const length = Math.min(n, MAX_ARRAY_LENGTH)
-  const result = new Array(length)
-  while (++index < length) {
-    result[index] = iteratee(index)
-  }
-  index = MAX_ARRAY_LENGTH
-  n -= MAX_ARRAY_LENGTH
-  while (++index < n) {
-    iteratee(index)
-  }
-  return result
-}
-
 //export default times
 
-Member.propTypes = {
+SearchDriver.propTypes = {
     member: PropTypes.object.isRequired,
     login: PropTypes.object.isRequired,
 }
 
 const mapStateToProps = (state) => ({
     member: state.member,
+    ads: state.ads,
+    login: state.login,
 });
 
 export default connect(
     mapStateToProps, 
-    {getMembers}
-)(Member);
+    {getFeatureTwo}
+)(SearchDriver);

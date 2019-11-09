@@ -189,17 +189,17 @@ router.post('/drivers/confirm/', (req, res) => {
             throw err;
         }
         console.log(data);
-    });
-    console.log("insert success");
-    pool.query(feedback_query, (err,data) => {
-        if (err) {
-            console.log("-------------------------------------------");
-            console.log(sql_query);
-            console.log(err);
-            throw err;
-        }
-        console.log(data);
-        res.status(200).json({success: true, confirmjobs: data.rows});
+        console.log("insert success");
+        pool.query(feedback_query, (err,data) => {
+            if (err) {
+                console.log("-------------------------------------------");
+                console.log(sql_query);
+                console.log(err);
+                throw err;
+            }
+            console.log(data);
+            res.status(200).json({success: true, confirmjobs: data.rows});
+        });
     });
 });
 module.exports = router;

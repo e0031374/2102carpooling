@@ -121,17 +121,17 @@ router.get('/:uname/', (req, res) => {
 
 //in Postman, Headers: key: content-type; values: json
 router.post('/resetpass', (req, res) => {
-    const query = 'given a previous password, return current if exist';
+    const { oldpass, username } = req.body;
+    const query = `SELECT CASE WHEN EXISTS(SELECT 1 FROM passwordHistory ph WHERE ph.oldpass = '${oldpass}' AND ph.uname = u.uname) THEN u.upassword ELSE null END AS result FROM users u WHERE u.uname = '${username}'`;
 
-    const param = [req.body.uname];
-    console.log(param);
+    console.log(query);
     //not allowed to send multiple queries
-    pool.query(query, param, (err,data) => {
+    pool.query(query, (err,data) => {
         if (err) {
             console.log(err);
             throw err;
         }
-        res.status(200).json({success: true, msg: 'recover success', pass: req.body.pass});
+        res.status(200).json({success: true, msg: 'recover success', pass: data.rows[0].result});
     });
 });
 
@@ -163,25 +163,25 @@ router.post('/changepass', (req, res) => {
         }
         //console.log(data);
        console.log("user verification success");
-        pool.query(history_query, (err,data) => {
+        pool.query(update_query, (err,data) => {
             if (err) {
+                console.log("user update failed");
                 res.status(400).json({success: false, uname:`${req.body.uname}`, 
-                    msg: "new password is the same as one old password"});
-                console.log("history insert failed");
+                    msg: "new user update failure"});
                 console.log(err);
                 throw err;
             }
-            console.log("history insert success");
+            console.log("user update success");
             //console.log(data);
-            pool.query(update_query, (err,data) => {
+            pool.query(history_query, (err,data) => {
                 if (err) {
-                    console.log("user update failed");
                     res.status(400).json({success: false, uname:`${req.body.uname}`, 
-                        msg: "new user update failure"});
+                        msg: "new password is the same as one old password"});
+                    console.log("history insert failed");
                     console.log(err);
                     throw err;
                 }
-                console.log("user update success");
+                console.log("history insert success");
                 res.status(200).json({success: true, msg: 'insert success', uname: req.body.uname});
             } );
         } );

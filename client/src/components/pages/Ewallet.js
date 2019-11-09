@@ -14,7 +14,7 @@ class Ewallet extends React.Component {
     }
 
     reloadComp = () => {
-        const newVal = this.state.reload++;
+        const newVal = this.state.reload + 1;
         this.setState({ reload: newVal });
     }
 

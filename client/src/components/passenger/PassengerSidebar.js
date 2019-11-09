@@ -1,11 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import PassengerPanel from './PassengerPanel';
+import SearchDriver from './SearchDriver';
+import FeatureThreeProfile from './FeatureThreeProfile';
 import WinProfile from './WinProfile';
 import { Menu, Grid, Segment } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { getJobs, deleteJob } from '../../actions/jobActions';
-import { getInsuranceCompanies } from '../../actions/driverActions';
+import { getFeatureTwo, getFeatureThree } from '../../actions/adActions';
+import { getSearchDriverCompanies } from '../../actions/driverActions';
 import { getWinBids } from '../../actions/passengerActions';
 
 class PassengerSidebar extends React.Component {
@@ -15,6 +18,8 @@ class PassengerSidebar extends React.Component {
 
     componentDidMount() {
         this.props.getWinBids(this.props.login.user);
+        this.props.getFeatureTwo();
+        this.props.getFeatureThree();
     }
 
     render() {
@@ -22,7 +27,8 @@ class PassengerSidebar extends React.Component {
         const renderItem = activeItem === 'passengerpanel'
             ? <PassengerPanel/>
             : activeItem === 'winprofile' ? <WinProfile/>
-//            : activeItem === 'insurance' ? <Insurance/>
+            : activeItem === 'searchdriver' ? <SearchDriver/>
+            : activeItem === 'Bidding Report' ? <FeatureThreeProfile/>
             : <PassengerPanel/>;
         console.log(this.props.passenger);
 
@@ -42,6 +48,16 @@ class PassengerSidebar extends React.Component {
                         active={activeItem === 'winprofile'}
                         onClick={this.handleItemClick}
                     />
+                    <Menu.Item
+                        name='searchdriver'
+                        active={activeItem === 'searchdriver'}
+                        onClick={this.handleItemClick}
+                    />
+                    <Menu.Item
+                        name='Bidding Report'
+                        active={activeItem === 'Bidding Report'}
+                        onClick={this.handleItemClick}
+                    />
                 </Menu>
                 </Grid.Column>
                 <Grid.Column stretched width={12}>
@@ -57,11 +73,6 @@ class PassengerSidebar extends React.Component {
 
 
 }
-                    //<Menu.Item
-                    //    name='insurance'
-                    //    active={activeItem === 'insurace'}
-                    //    onClick={this.handleItemClick}
-                    ///>
 const container = {
 }
 
@@ -72,7 +83,7 @@ const container = {
 //            <ul>
 //                <li><Link to="/driver/passengerpanel">Job Profile</Link></li>
 //                <li><Link to="/driver/winprofile">Car Profile</Link></li>
-//                <li><Link to="/driver/insurance">Buy Insurance</Link></li>
+//                <li><Link to="/driver/searchdriver">Buy SearchDriver</Link></li>
 //            </ul>
 //        </div>
 //    );
@@ -86,7 +97,7 @@ const mapStateToProps = (state) => ({
 
 export default connect(
     mapStateToProps, 
-    { getWinBids }
+    { getWinBids, getFeatureTwo, getFeatureThree }
 )(PassengerSidebar);
 //export default PassengerSidebar;
 

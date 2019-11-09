@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 
 
 const accounts = require('./routes/api/accounts');
+const ads = require('./routes/api/ads');
 const settings = require('./routes/api/settings');
 const jobs = require('./routes/api/jobs');
 const members = require('./routes/api/members');
@@ -17,6 +18,7 @@ const app = express(); //boilerplate: initialize express into app
 app.use(bodyParser.json());
        
 app.use('/api/accounts', accounts);
+app.use('/api/ads', ads);
 app.use('/api/settings', settings);
 app.use('/api/jobs', jobs);
 app.use('/api/members', members);

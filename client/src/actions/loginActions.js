@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ADD_USER, GET_USER, LOGIN_VALIDATION, LOGIN_ERROR,
+import { ADD_USER, GET_USER, LOGIN_VALIDATION, LOGIN_ERROR, RERIEVE_PASS,
     USER_SETTINGS, GET_SETTINGS, ADD_PASSENGER, ADD_DRIVER, ADD_ADVERTIZER,
     RETRIEVE_PASS } from '../actions/types';
 
@@ -125,12 +125,14 @@ export const addAdvertizer = (formState) => dispatch => {
 //TODO
 //expects req.body.uname to be inserted in formState
 export const resetPass = (formState) => dispatch => {
+    console.log("reset pass");
     axios
         .post(`/api/settings/resetpass`, formState)
         .then(res => {
+                console.log(res.data);
                 dispatch({
                     //fetch new settings
-                    type: GET_SETTINGS,
+                    type: RETRIEVE_PASS,
                     payload: res.data
                 })
             console.log(res.data)
@@ -140,7 +142,7 @@ export const resetPass = (formState) => dispatch => {
 export const retrievePass = (state) => dispatch => {
     console.log("hee")
     axios
-        .get(`/api/accounts/${state.uname}/${state.pass}`)
+        .get(`/api/accounts/`)
         .then(res => {
                 dispatch({
                     type: RETRIEVE_PASS,

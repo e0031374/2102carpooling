@@ -1,17 +1,22 @@
 import React from 'react';
-import { retrievePass, getSettings } from '../../actions/loginActions';
+import { resetPass, getSettings } from '../../actions/loginActions';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Redirect } from  'react-router-dom';
-import FixedCard from '../layout/FixedCard';
+import {Card, Form, Input, Menu, Segment, Grid} from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 
 class ForgotPasswordForm extends React.Component {
 
     state = {
-        uname: "",
-        pass: "",
+        username: "",
+        oldpass: "",
         msg: "", 
+        retPass: "",
+    }
+
+    componentDidMount() {
+        //this.setState({ resetPass: "" });
     }
 
     onChange = (e) => {
@@ -20,10 +25,10 @@ class ForgotPasswordForm extends React.Component {
         });
     }
 
-    onSubmit = (e) => {
+    onSubmit = async (e) => {
         e.preventDefault();
-        const user = this.state.uname;
-        this.props.retrievePass({...this.state});
+        const user = this.state.username;
+        this.props.resetPass({...this.state});
 
         //if (this.props.login.isLoggedIn) {
         //    console.log("login success");
@@ -34,56 +39,81 @@ class ForgotPasswordForm extends React.Component {
         //        msg: this.props.login.authError});
         //}
         this.props.getSettings(user);
+        console.log("sleeep");
+        await this.sleep(200);
+        console.log("sleeep");
+        this.setState({ ...this.state });
+        const { retPass } = this.props.login;
+        this.setState({ retPass });
+        console.log(this.state);
     }
+
+    sleep = (ms) => {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
     render () {
-        const passRetrieved = <FixedCard
-                title={'Password retireved Successfully'}
-                msg={`Password: ${this.props.login.retPass}`}
-            />
-        const formLogin = <form onSubmit={this.onSubmit}>
+        const passRetrieved = <Card>
+                <Card.Content>
+                    <Card.Header>
+                        {'Password retireved Successfully'}
+                    </Card.Header>
+                    <Card.Description>
+                        {`Password: ${this.state.retPass}`}
+                    </Card.Description>
+                </Card.Content>
+            </Card>
+        const formLogin = <Form onSubmit={this.onSubmit}>
                 <label>Key in any old password</label>
                 <div>
-                     <label htmlFor="unameField">UserName: </label>
-                     <input
-                         id="unameField"
+                     <Form.Input
+                         label="Username"
+                         id="usernameField"
                          type="text"
-                         name="uname"
+                         name="username"
                          placeholder="username"
-                         value={this.state.uname}
+                         value={this.state.username}
                          onChange={this.onChange}
                      />
                 </div> 
                 <div>
-                     <label htmlFor="passField">Any Old Password: </label>
-                     <input
-                         id="passField"
+                     <Form.Input
+                         label="Any Old Password"
                          type="text"
-                         name="pass"
+                         name="oldpass"
                          placeholder="password"
-                         value={this.state.pass}
+                         value={this.state.oldpass}
                          onChange={this.onChange}
                      />
                 </div> 
-                <button
-                >Submit</button>
-            </form>
+                <Form.Button
+                >Submit</Form.Button>
+            </Form>
         const visual = this.props.login.claimed
             ? passRetrieved
-            : <FixedCard title={'Retrieve Passeword'} msg={formLogin}/>
+            : <Card>
+                  <Card.Content>
+                    <Card.Header>
+                        {'Retrieve Password'}
+                    </Card.Header>
+                    <Card.Meta>
+                    </Card.Meta>
+                    <Card.Description>
+                        {formLogin}
+                    </Card.Description>
+                  </Card.Content>
+            </Card>
         return (
-            <div style={cardStyle}>
+            <div >
                 {visual}
             </div>
         );
     }
 }
 
-const cardStyle = {
-    width: '400px',
-}
 
 ForgotPasswordForm.propTypes = {
-    retrievePass : PropTypes.func.isRequired,
+    resetPass : PropTypes.func.isRequired,
 }
 
 const mapStateToProps = state => ({
@@ -92,6 +122,6 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps, 
-    {retrievePass,
+    {resetPass,
      getSettings   
 })(ForgotPasswordForm);

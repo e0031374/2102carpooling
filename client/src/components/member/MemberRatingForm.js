@@ -97,14 +97,6 @@ class MemberRatingForm extends React.Component {
                         <Form.Group inline>
                             <label>Rating</label>
                             {radioBtns}
-                            <Form.Field
-                                control={Radio}
-                                name="rating"
-                                value='1'
-                                label='1'
-                                checked={this.state.rating === '1'}
-                                onChange={this.onChange}
-                            />
                         </Form.Group>
                         <Form.Field
                             control={TextArea}
